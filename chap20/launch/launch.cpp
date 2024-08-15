@@ -96,7 +96,7 @@ bool wxViewHTMLFile(const wxString& url)
     return ShellExecuteEx(& shellInfo) != 0;
 #elif defined(__WXMSW__)
     ShellExecute((HWND) (wxTheApp->GetTopWindow() ? wxTheApp->GetTopWindow()->GetHWND() : NULL),
-                 NULL, url.c_str(),NULL,"",SW_SHOWNORMAL);
+                 NULL, url.c_str(),NULL,LPCWSTR(""),SW_SHOWNORMAL);
     return true;
 #else
     bool ok = false;
@@ -377,8 +377,10 @@ bool wxLaunchFile(const wxString& command, const wxString& specificErrorMessage)
     wxString actualCommand, arguments;
     wxSeparateCommandAndArguments(command, actualCommand, arguments);
 
-    wxString path, file, ext;
-    wxSplitPath(actualCommand, & path, & file, & ext);
+    wxString ext;
+    //wxSplitPath(actualCommand, & path, & file, & ext);
+    wxFileName fn = (wxFileName)actualCommand;
+    ext = fn.GetExt();
 
     wxString extLower(ext.Lower());
     if (extLower == wxT("html") || 

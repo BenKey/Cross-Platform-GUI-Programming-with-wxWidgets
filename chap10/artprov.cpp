@@ -11,6 +11,7 @@
 #include "bitmaps/helpicon.xpm"
 
 #include "wx/artprov.h"
+#include "wx/app.h"
 
 // The art provider class
 class MyArtProvider : public wxArtProvider
@@ -56,13 +57,25 @@ wxBitmap MyArtProvider::CreateBitmap(const wxArtID& id,
 }
 
 // Initialization
+
+class MyApp : public wxApp
+{
+public:
+    // Called on application startup
+    virtual bool OnInit();
+};
+
 bool MyApp::OnInit()
 {
-    ...
+    
+    wxArtProvider::Push(new MyArtProvider);
 
-    wxArtProvider::PushProvider(new MyArtProvider);
-
-    ...
+    
     return true;
 }
 
+// Implements MyApp& GetApp()
+DECLARE_APP(MyApp)
+
+// Give wxWidgets the means to create a MyApp object
+IMPLEMENT_APP(MyApp)

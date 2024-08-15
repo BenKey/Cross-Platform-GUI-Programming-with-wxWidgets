@@ -125,7 +125,7 @@ RiffleFrame::RiffleFrame( )
 {
 }
 
-RiffleFrame::RiffleFrame( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+RiffleFrame::RiffleFrame( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) 
 {
     Create( parent, id, caption, pos, size, style );
 }

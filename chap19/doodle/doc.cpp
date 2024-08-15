@@ -38,7 +38,7 @@ DoodleDocument::~DoodleDocument()
 
 wxOutputStream& DoodleDocument::SaveObject(wxOutputStream& stream)
 {
-    wxDocument::SaveObject(stream);
+    wxDocument::SaveObject( (std::ostream&) stream);
 
     wxTextOutputStream textStream( stream );
 
@@ -60,7 +60,7 @@ wxOutputStream& DoodleDocument::SaveObject(wxOutputStream& stream)
 
 wxInputStream& DoodleDocument::LoadObject(wxInputStream& stream)
 {
-    wxDocument::LoadObject(stream);
+    wxDocument::LoadObject( (std::istream&) stream);
 
     wxTextInputStream textStream( stream );
 

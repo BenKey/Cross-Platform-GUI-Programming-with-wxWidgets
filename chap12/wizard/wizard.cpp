@@ -13,6 +13,7 @@
 #include "wx/wizard.h"
 
 #include "wiztest.xpm"
+#include "wiztest2.xpm"
 
 // ----------------------------------------------------------------------------
 // constants

@@ -28,6 +28,9 @@
 #include "wx/help.h"
 #include "wx/config.h"
 
+#include "wx/html/helpfrm.h"
+#include "wx/html/helpctrl.h"
+
 /*!
  * Forward declarations
  */
@@ -89,7 +92,7 @@ public:
 ////@begin RiffleApp member variables
 ////@end RiffleApp member variables
 
-    wxHelpControllerBase*   m_helpController;
+    wxHtmlHelpController*   m_helpController;
     wxConfig*               m_config;
     wxString                m_appDir;
 };

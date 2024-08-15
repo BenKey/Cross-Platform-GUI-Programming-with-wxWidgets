@@ -9,7 +9,13 @@
 // Licence:	    wxWindows Licence
 /////////////////////////////////////////////////////////////////////////////
 
-#include "wx/wx.h"
+// For compilers that support precompilation, includes "wx/wx.h".
+#include "wx/wxprec.h"
+
+
+#ifndef WX_PRECOMP
+    #include "wx/wx.h"
+#endif
 
 #ifdef __BORLANDC__
 #pragma hdrstop
@@ -17,6 +23,8 @@
 
 #include "wx/process.h"
 #include "wx/txtstrm.h"
+#include "wx/filename.h"
+#include "wx/app.h"
 
 #include "textctrlex.h"
 #include "debugger.h"
@@ -335,8 +343,8 @@ int DebuggerWindow::AddTool(int id, const wxBitmap& bitmap, const wxString& labe
     m_toolCommands.Add(cmd);
     m_toolPrompts.Add(prompt);
 
-    m_toolBar->AddTool(id, bitmap, wxNullBitmap, FALSE, -1, -1, (wxObject *) NULL, label);
-
+    m_toolBar->AddTool(id, label, bitmap, wxNullBitmap, wxITEM_NORMAL, wxEmptyString, wxEmptyString, (wxObject *) NULL);
+    
     return pos;
 }
 
@@ -498,7 +506,7 @@ DebuggerConsoleCtrl::DebuggerConsoleCtrl(
 void DebuggerConsoleCtrl::Append(const wxString& line)
 {
     m_writing = true;
-    AppendText(line.Length(), line);
+    AppendText(line);
     m_writing = false;
 }
 

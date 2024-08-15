@@ -14,7 +14,12 @@
 #endif
 
 // For compilers that support precompilation, includes "wx.h".
-#include "wx/wx.h"
+#include "wx/wxprec.h"
+
+
+#ifndef WX_PRECOMP
+    #include "wx/wx.h"
+#endif
 
 #include <wx/file.h>
 #include <wx/wfstream.h>

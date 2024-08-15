@@ -76,7 +76,7 @@ RiffleApp::RiffleApp()
  * Initialisation for RiffleApp
  */
 
-bool RiffleApp::OnInit()
+bool RiffleApp::OnInit() : helpFilePath(wxHF_DEFAULT_STYLE | wxHF_OPEN_FILES)
 {    
     wxImage::AddHandler( new wxXPMHandler );
     wxImage::AddHandler( new wxPNGHandler );
@@ -91,12 +91,13 @@ bool RiffleApp::OnInit()
     // Use argv to get current app directory
     m_appDir = wxFindAppPath(argv[0], currentDir, _T("RIFFLEDIR"), wxT("Riffle"));
 
+
     // Go up a directory if debugging (since exe is in subdirectory)
 #ifdef __WXDEBUG__
     m_appDir = wxPathOnly(m_appDir);
 #endif
 
-    m_helpController = new wxHelpController;
+    // m_helpController = new wxHelpController;
 
     // Create a config object that persists for the life of the application
     m_config = new wxConfig(wxT("Riffle"), wxT("Anthemion Software"));
@@ -105,7 +106,20 @@ bool RiffleApp::OnInit()
     InitConfig();
     
     wxString helpFilePath(GetFullAppPath(_T("riffle")));
-    m_helpController->Initialize(helpFilePath);
+#ifdef WIN32
+    helpFilePath = ( (wxFileName) argv[0]).GetPath() + "\\RiffleManual\\riffle_peghelp.htm";
+#else
+    helpFilePath = ((wxFileName)argv[0]).GetPath() + "/RiffleManual/riffle_peghelp.htm";
+#endif
+    //m_helpController->Initialize(helpFilePath);
+
+    m_helpController->UseConfig(wxConfig::Get());
+    bool ret;
+    m_helpController->SetTempDir(".");
+
+    ret = m_helpController->AddBook(helpFilePath);
+    if (!ret)
+        wxMessageBox("Failed adding book " + helpFilePath);
 
     // Get the window position and size
     wxPoint windowPos = wxDefaultPosition;

@@ -36,6 +36,7 @@ bool wxViewPDFFile(const wxString& pdfFile);
 
 bool wxPlaySoundFile(const wxString& soundFile);
 
-#undef
+// #undef
     // __LAUNCH_H__
 
+#endif

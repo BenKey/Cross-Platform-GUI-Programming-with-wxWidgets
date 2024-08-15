@@ -74,11 +74,12 @@ include_directories(
 #endforeach()
 
 
-function(CrateExe item)
-	message(STATUS "item=${item}")
+function(CrateExe item )
+	#message(STATUS "item=${item}")
 	string(REPLACE "/" "-" exeName ${item})
-	message(STATUS "exeName=${exeName}")
-	file(GLOB SRC_FILES ${item}/*.cpp)
+	#message(STATUS "exeName=${exeName}")
+	message(STATUS "Creating build for: ${exeName}")
+	file(GLOB SRC_FILES ${item}/*.cpp ${item}/*.h ${item}/*.xpm )
 
 	#message(STATUS "additionalSources=${additionalSources}")
 	#message(STATUS "additionalIncludes=${additionalIncludes}")
@@ -90,51 +91,127 @@ function(CrateExe item)
 		add_executable(${exeName}  ${SRC_FILES} ) # ${additionalSources})
 	endif()
 	target_include_directories(${exeName} PUBLIC 
-					${WXWIDGETS_DIR}/include
-					${WXWIDGETS_PLATFORM_INCLUDE_DIR}
+					#${WXWIDGETS_DIR}/include
+					#${WXWIDGETS_PLATFORM_INCLUDE_DIR}
 					#${additionalIncludes}
 					${item})
 endfunction()
 
-foreach(item "chap02" "chap03" "chap09" "chap10" "chap11" "chap16" "chap17" )
+foreach(item "chap02" "chap09" "chap10" "chap11" "chap12/thumbnail" "chap12/taskbar" "chap12/wizard" "chap16" "chap17" )
 	CrateExe(${item} )
 endforeach()
 
-file(GLOB SRC_FILES_chap12	chap12/*.cpp)
-file(GLOB ThumbNailFiles	chap12/thumbnail/*.cpp) 
-if(WIN32)
-	add_executable(chap12 WIN32 ${SRC_FILES_chap12} ${ThumbNailFiles}  )
-else()
-	add_executable(chap12  ${SRC_FILES} ${ThumbNailFiles} )
-endif()
-target_include_directories(chap12 PUBLIC 
-					${WXWIDGETS_DIR}/include
-					${WXWIDGETS_PLATFORM_INCLUDE_DIR}
-					"chap12/thumbnail"
-					"chap12")
+
+
+
+		
+file(GLOB Chap03_SRC  chap03/* )
+add_library(chap03  ${Chap03_SRC} ) # ${additionalSources})
+
+
+
+
+
+#file(GLOB SRC_FILES_chap12	chap12/*.cpp chap12/*.h chap12/*.xpm  )
+#file(GLOB ThumbNailFiles	chap12/thumbnail/*.cpp chap12/thumbnail/*.h chap12/*.xpm ) 
+#if(WIN32)
+#	add_executable(chap12 WIN32 ${SRC_FILES_chap12} ${ThumbNailFiles}  )
+#else()
+#	add_executable(chap12  ${SRC_FILES} ${ThumbNailFiles} )
+#endif()
+#target_include_directories(chap12 PUBLIC 
+					#${WXWIDGETS_DIR}/include
+					#${WXWIDGETS_PLATFORM_INCLUDE_DIR}
+#					"chap12/thumbnail"
+#					"chap12")
 
 
 
 
 
 
-add_custom_command(
-	TARGET "chap16" POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/chap16/flag.png  ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/flag.png #${CMAKE_CURRENT_BINARY_DIR}/flag.png
-)
-message(STATUS "CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}S")
+#add_custom_command(
+#	TARGET "chap16" POST_BUILD
+ #   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/chap16/flag.png  ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/flag.png #${CMAKE_CURRENT_BINARY_DIR}/flag.png
+#)
+#message(STATUS "CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}S")
+
+#if (CMAKE_BUILD_TYPE)
+#	message(STATUS "CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
+#	FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/chap16/flag.png DESTINATION "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}")
+#elseif(CMAKE_CONFIGURATION_TYPES)
+#	foreach(buildType ${CMAKE_CONFIGURATION_TYPES})
+#		message(STATUS "CMAKE_CONFIGURATION_TYPE=${buildType}")
+#		FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/chap16/flag.png DESTINATION "${CMAKE_BINARY_DIR}/${buildType}")
+#	endforeach()
+#endif()
+
+
+#FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/chap16/flag.png DESTINATION "${CMAKE_BINARY_DIR}/$<CONFIG>" )
+add_custom_command( TARGET "chap16" POST_BUILD
+					COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/chap16/flag.png "${CMAKE_BINARY_DIR}/$<CONFIG>/" )
+FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/chap16/flag.png DESTINATION ${CMAKE_BINARY_DIR})
+
+#message(STATUS "Creating build for: chap16")
+#file(GLOB chap16_SRC chap16/*.cpp chap16/*.h chap16/*.xpm chap16/*.png )
+#
+#if(WIN32)
+#	add_executable(chap16 WIN32 ${chap16_SRC} ) # ${additionalSources})
+#else()
+#	add_executable(chap16  ${chap16_SRC} ) # ${additionalSources})
+#endif()
+#target_include_directories(chap16 PUBLIC 
+#				chap16)
 
 
 
-CrateExe("chap18/SocketEvents")
-CrateExe("chap18/SocketStreams")
+
+
+
+
+
+
+
+
+CrateExe("chap18/SocketEvents/Client")
+CrateExe("chap18/SocketEvents/Server")
+CrateExe("chap18/SocketStreams/Client")
+CrateExe("chap18/SocketStreams/Server")
 CrateExe("chap19/doodle")
-CrateExe("chap20/findapppath")
-CrateExe("chap20/launch")
+#CrateExe("chap20/findapppath")
+#CrateExe("chap20/launch")
 CrateExe("chap20/pipedprocess")
-CrateExe("chap20/valconfig")
+#CrateExe("chap20/valconfig")
 
 
+add_library(chap20-findapppath  chap20/findapppath/findapppath.cpp )
+add_library(chap20-launch  chap20/launch/launch.cpp chap20/launch/launch.h  ) 
+add_library(chap20-valconfig  chap20/valconfig/valconfig.cpp chap20/valconfig/valconfig.h  ) 
+
+
+file(GLOB RIFFLE_SRC riffle/src/*.cpp riffle/src/*.h )
+
+message(STATUS "RIFFLE_SRC=${RIFFLE_SRC}")
+if(WIN32)
+	add_executable(Riffle-app WIN32 ${RIFFLE_SRC} )
+else()
+	add_executable(Riffle-app  ${RIFFLE_SRC} )
+endif()
+
+target_include_directories(Riffle-app PUBLIC 
+				${WXWIDGETS_DIR}/include
+				${WXWIDGETS_PLATFORM_INCLUDE_DIR}
+				riffle/src
+				riffle/manual)
+
+
+# Manual & Help files post-build
+
+#file(GLOB SRC_FILES ${item}/*.cpp ${item}/*.h ${item}/*.xpm )
+add_custom_command( TARGET Riffle-app POST_BUILD
+					COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different "${CMAKE_CURRENT_SOURCE_DIR}/riffle/manual" "${CMAKE_BINARY_DIR}/$<CONFIG>/RiffleManual" )
+
+#target_link_libraries(Riffle-app wx::net wx::core wx::base)
 
 #include_directories()
 #link_directories()

@@ -24,6 +24,7 @@
 ////@end includes
 
 #include "wx/dir.h"
+#include "wx/filename.h"
 #include "thumbnaildlg.h"
 // #include "thumbnailitem.h"
 // #include "utils.h"
@@ -293,8 +294,8 @@ wxArrayString wxThumbnailBrowserDialog::GetSelections() const
 static int DetermineImageType(const wxString& filename)
 {
     wxString path, name, ext;
-
-    wxSplitPath(filename, & path, & name, & ext);
+    wxFileName fn = (wxFileName)filename;
+    ext = fn.GetExt();
 
     ext.MakeLower();
     if (ext == "jpg" || ext == "jpeg")

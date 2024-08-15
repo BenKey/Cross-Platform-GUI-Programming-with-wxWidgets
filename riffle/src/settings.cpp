@@ -37,14 +37,19 @@ SettingsDialog::SettingsDialog(wxWindow* win)
 {
     SetExtraStyle(wxDIALOG_EX_CONTEXTHELP|wxWS_EX_VALIDATE_RECURSIVELY);
 
-    Create(win, -1, _("Settings"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+    Create(win, wxID_ANY, "Settings", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
     CreateButtons(wxOK|wxCANCEL|wxHELP);
 
     wxBookCtrlBase* notebook = GetBookCtrl();
 
-    m_generalSettingsPage = CreateGeneralSettingsPage(notebook);
+    //wxPanel* generalSettingsPage = CreateGeneralSettingsPage(notebook);
+    //notebook->SetImageList();
 
-    notebook->AddPage(m_generalSettingsPage, _("General"));
+    
+
+    //notebook->AddPage(generalSettingsPage, "General", true, 0 );
+    
+    
 
     LayoutDialog();
 }

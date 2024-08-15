@@ -45,7 +45,7 @@ bool wxFontSelectorCtrl::Create(wxWindow* parent, wxWindowID id, const wxPoint& 
     m_fontData.SetColour(GetForegroundColour());
 
     // Tell the sizers to use the given or best size    
-    SetBestFittingSize(size);
+    SetInitialSize(size);
     
     return true;
 }

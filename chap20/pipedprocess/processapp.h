@@ -46,6 +46,8 @@ public:
     /// Handle idle events
     void OnIdle(wxIdleEvent& event);
 
+    void OnTimer(wxTimerEvent& event);
+
 protected:
     // List of processes that the app knows about
     wxList m_processes;

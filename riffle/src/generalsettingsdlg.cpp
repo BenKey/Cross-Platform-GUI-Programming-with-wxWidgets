@@ -117,7 +117,7 @@ void GeneralSettingsPage::CreateControls()
     itemBoxSizer3->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxStaticText* itemStaticText7 = new wxStaticText( itemPanel1, wxID_STATIC, _("&Zoom by:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer3->Add(itemStaticText7, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer3->Add(itemStaticText7, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer8 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer3->Add(itemBoxSizer8, 0, wxALIGN_LEFT, 5);
@@ -131,12 +131,12 @@ void GeneralSettingsPage::CreateControls()
     itemBoxSizer8->Add(itemSpinCtrl10, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText11 = new wxStaticText( itemPanel1, wxID_STATIC, _("% per increment"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer8->Add(itemStaticText11, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT|wxTOP|wxBOTTOM|wxADJUST_MINSIZE, 5);
+    itemBoxSizer8->Add(itemStaticText11, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT|wxTOP|wxBOTTOM, 5);
 
     itemBoxSizer3->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     wxStaticText* itemStaticText13 = new wxStaticText( itemPanel1, wxID_STATIC, _("&Thumbnail size:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer3->Add(itemStaticText13, 0, wxALIGN_LEFT|wxALL|wxADJUST_MINSIZE, 5);
+    itemBoxSizer3->Add(itemStaticText13, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer14 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer3->Add(itemBoxSizer14, 0, wxALIGN_LEFT, 5);
@@ -150,7 +150,7 @@ void GeneralSettingsPage::CreateControls()
     itemBoxSizer14->Add(itemSpinCtrl16, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText17 = new wxStaticText( itemPanel1, wxID_STATIC, _("pixels"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer14->Add(itemStaticText17, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT|wxTOP|wxBOTTOM|wxADJUST_MINSIZE, 5);
+    itemBoxSizer14->Add(itemStaticText17, 0, wxALIGN_CENTER_VERTICAL|wxRIGHT|wxTOP|wxBOTTOM, 5);
 
     itemBoxSizer3->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 

@@ -1518,7 +1518,7 @@ bool DnDFile::OnDropFiles(wxCoord, wxCoord, const wxArrayString& filenames)
 DnDShapeDialog::DnDShapeDialog(wxFrame *parent, DnDShape *shape)
   :wxDialog( parent, 6001, wxT("Choose Shape"), wxPoint( 10, 10 ),
              wxSize( 40, 40 ),
-             wxRAISED_BORDER|wxCAPTION|wxTHICK_FRAME|wxSYSTEM_MENU )
+             wxRAISED_BORDER|wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU )
 {
     m_shape = shape;
     wxBoxSizer* topSizer = new wxBoxSizer( wxVERTICAL );
@@ -1537,7 +1537,7 @@ DnDShapeDialog::DnDShapeDialog(wxFrame *parent, DnDShape *shape)
     // attributes
     wxStaticBox* box = new wxStaticBox( this, wxID_ANY, wxT("&Attributes") );
     wxStaticBoxSizer* attrSizer = new wxStaticBoxSizer( box, wxHORIZONTAL );
-    wxFlexGridSizer* xywhSizer = new wxFlexGridSizer( 4, 2 );
+    wxFlexGridSizer* xywhSizer = new wxFlexGridSizer( 4, 2, 1 );
 
     wxStaticText* st;
 

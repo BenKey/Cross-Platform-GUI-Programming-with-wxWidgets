@@ -1,16 +1,31 @@
+#include <wx/event.h>
+#include <wx/msgdlg.h>
+#include <wx/stattext.h>
+#include <wx/button.h>
+#include <wx/taskbar.h>
+
+//#include "smile.xpm"
+// For compilers that don't support precompilation, include "wx/wx.h"
+#include "wx/wxprec.h"
+
+#ifndef WX_PRECOMP
+#	include "wx/wx.h"
+#endif
+
+
 class MyTaskBarIcon: public wxTaskBarIcon
 {
 public:
     MyTaskBarIcon() {};
 
     void OnLeftButtonDClick(wxTaskBarIconEvent&);
-    void OnMenuRestore(wxCommandEvent&);
+    void OnMenu(wxCommandEvent&);
     void OnMenuExit(wxCommandEvent&);
     void OnMenuSetNewIcon(wxCommandEvent&);
 
     virtual wxMenu *CreatePopupMenu();
 
-DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 };
 
 enum {
@@ -23,7 +38,7 @@ BEGIN_EVENT_TABLE(MyTaskBarIcon, wxTaskBarIcon)
     EVT_MENU(PU_RESTORE, MyTaskBarIcon::OnMenuRestore)
     EVT_MENU(PU_EXIT,    MyTaskBarIcon::OnMenuExit)
     EVT_MENU(PU_NEW_ICON,MyTaskBarIcon::OnMenuSetNewIcon)
-    EVT_TASKBAR_LEFT_DCLICK  (MyTaskBarIcon::OnLeftButtonDClick)
+    EVT_TASKBAR_CLICK(MyTaskBarIcon::OnLeftButtonDClick)
 END_EVENT_TABLE()
 
 void MyTaskBarIcon::OnMenuRestore(wxCommandEvent& )
@@ -64,6 +79,8 @@ void MyTaskBarIcon::OnLeftButtonDClick(wxTaskBarIconEvent&)
 
 
 // Define a new application
+
+
 class MyApp: public wxApp
 {
 public:
@@ -88,7 +105,9 @@ protected:
 DECLARE_EVENT_TABLE()
 };
 
-#include "../sample.xpm"
+
+
+#include "sample.xpm"
 #include "smile.xpm"
 
 #include "wx/taskbar.h"
@@ -102,7 +121,8 @@ IMPLEMENT_APP(MyApp)
 bool MyApp::OnInit(void)
 {
     // Create the main frame window
-    dialog = new MyDialog(NULL, wxID_ANY, wxT("wxTaskBarIcon Test Dialog"), wxDefaultPosition, wxSize(365, 290));
+    // dialog = new MyDialog(NULL, wxID_ANY, wxT("wxTaskBarIcon Test Dialog"), wxDefaultPosition, wxSize(365, 290));
+    dialog = new MyDialog(wxT("wxTaskBarIcon Test Dialog"));
 
     dialog->Show(true);
 
@@ -110,20 +130,15 @@ bool MyApp::OnInit(void)
 }
 
 
+
+
+
+
 BEGIN_EVENT_TABLE(MyDialog, wxDialog)
     EVT_BUTTON(wxID_OK, MyDialog::OnOK)
     EVT_BUTTON(wxID_EXIT, MyDialog::OnExit)
     EVT_CLOSE(MyDialog::OnCloseWindow)
 END_EVENT_TABLE()
-
-
-
-MyDialog::MyDialog(wxWindow* parent, const wxWindowID id, const wxString& title,
-    const wxPoint& pos, const wxSize& size, const long windowStyle):
-  wxDialog(parent, id, title, pos, size, windowStyle)
-{
-    Init();
-}
 
 MyDialog::~MyDialog()
 {

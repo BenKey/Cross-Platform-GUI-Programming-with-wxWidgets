@@ -28,6 +28,7 @@
 #include "wx/effects.h"
 #include "wx/dir.h"
 #include "wx/clipbrd.h"
+#include "wx/filename.h"
 
 #include "browser.h"
 
@@ -146,9 +147,20 @@ void RiffleImageViewer::OnPaint(wxPaintEvent& WXUNUSED(event))
         
         if (m_bitmap.Ok())
         {
-            wxRect borderRect = rect; 
+            wxRect borderRect = rect;
+#if WXWIN_COMPATIBILITY_2_8 == 1:
             wxEffects effects;
-            effects.DrawSunkenEdge(dc, borderRect);            
+            effects.DrawSunkenEdge(dc, borderRect);
+#else
+            // see https://stackoverflow.com/questions/52883318/wxeffects-is-undefined
+            wxBrush brush(m_bitmap);
+
+            wxDCBrushChanger bc(dc, brush);
+            wxDCPenChanger pc(dc, *wxTRANSPARENT_PEN);
+
+            dc.DrawRectangle(rect);
+#endif
+
             
             dc.DrawBitmap(m_bitmap, bitmapRect.x, bitmapRect.y);
         }
@@ -461,7 +473,8 @@ static int DetermineImageType(const wxString& filename)
 {
     wxString path, name, ext;
 
-    wxSplitPath(filename, & path, & name, & ext);
+    wxFileName fn = (wxFileName) filename;
+    ext = fn.GetExt();
 
     ext.MakeLower();
     if (ext == wxT("jpg") || ext == wxT("jpeg"))

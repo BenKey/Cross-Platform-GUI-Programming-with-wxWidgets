@@ -112,7 +112,7 @@ bool wxThumbnailCtrl::Create( wxWindow* parent, wxWindowID id, const wxPoint& po
 #endif
 
     // Tell the sizers to use the given or best size    
-    SetBestFittingSize(size);
+    SetInitialSize(size);
     
 #if USE_BUFFERED_PAINT
     // Create a buffer
@@ -231,8 +231,9 @@ void wxThumbnailCtrl::Clear()
 
 static bool wxGetIntegerFromFilename(const wxString& fname, int& n)
 {
-    wxString filename = fname;
-    wxStripExtension(filename);
+    wxFileName fn = (wxFileName)fname;
+    wxString filename = fn.GetName();
+
     wxString strNum;
 
     size_t len = filename.Len();
@@ -336,17 +337,18 @@ int wxThumbnailCtrlCmpFunc(wxThumbnailItem** item1, wxThumbnailItem** item2)
     }
     else if (sortMode == wxTHUMBNAIL_SORT_TYPE_UP || sortMode == wxTHUMBNAIL_SORT_TYPE_DOWN)
     {
-        wxString filename1, path1, ext1;
-        wxString filename2, path2, ext2;
+        wxString ext1, ext2;
+        wxFileName fn1 = (wxFileName)(*item1)->GetFilename();
+        wxFileName fn2 = (wxFileName)(*item2)->GetFilename();
         if (sortMode == wxTHUMBNAIL_SORT_TYPE_UP)
         {
-            wxSplitPath((*item1)->GetFilename(), & filename1, & path1, & ext1);
-            wxSplitPath((*item2)->GetFilename(), & filename2, & path2, & ext2);
+            ext1 = fn1.GetExt();
+            ext2 = fn2.GetExt();
         }
         else
         {
-            wxSplitPath((*item2)->GetFilename(), & filename1, & path1, & ext1);
-            wxSplitPath((*item1)->GetFilename(), & filename2, & path2, & ext2);
+            ext2 = fn1.GetExt();
+            ext1 = fn2.GetExt();
         }
         return ext1.CmpNoCase(ext2);
     }
@@ -940,8 +942,6 @@ void wxThumbnailCtrl::OnChar(wxKeyEvent& event)
         event.GetKeyCode() == WXK_HOME ||
         event.GetKeyCode() == WXK_PAGEUP ||
         event.GetKeyCode() == WXK_PAGEDOWN ||
-        event.GetKeyCode() == WXK_PRIOR ||
-        event.GetKeyCode() == WXK_NEXT ||
         event.GetKeyCode() == WXK_END)
     {
         Navigate(event.GetKeyCode(), flags);
@@ -1022,7 +1022,7 @@ bool wxThumbnailCtrl::Navigate(int keyCode, int flags)
             ScrollIntoView(next, keyCode);
         }
     }
-    else if (keyCode == WXK_PAGEUP || keyCode == WXK_PRIOR)
+    else if (keyCode == WXK_PAGEUP)
     {
         int next = focus - (perRow * rowsInView);
         if (next < 0)
@@ -1033,7 +1033,7 @@ bool wxThumbnailCtrl::Navigate(int keyCode, int flags)
             ScrollIntoView(next, keyCode);
         }
     }
-    else if (keyCode == WXK_PAGEDOWN || keyCode == WXK_NEXT)
+    else if (keyCode == WXK_PAGEDOWN)
     {
         int next = focus + (perRow * rowsInView);
         if (next >= GetCount())
@@ -1080,7 +1080,7 @@ void wxThumbnailCtrl::ScrollIntoView(int n, int keyCode)
     wxSize clientSize = GetClientSize();
 
     // Going down
-    if (keyCode == WXK_DOWN || keyCode == WXK_RIGHT || keyCode == WXK_END || keyCode == WXK_NEXT || keyCode == WXK_PAGEDOWN)
+    if (keyCode == WXK_DOWN || keyCode == WXK_RIGHT || keyCode == WXK_END || keyCode == WXK_PAGEDOWN)
     {
         if ((rect.y + rect.height) > (clientSize.y + startY))
         {
@@ -1098,7 +1098,7 @@ void wxThumbnailCtrl::ScrollIntoView(int n, int keyCode)
         }
     }
     // Going up
-    else if (keyCode == WXK_UP || keyCode == WXK_LEFT || keyCode == WXK_HOME || keyCode == WXK_PRIOR || keyCode == WXK_PAGEUP)
+    else if (keyCode == WXK_UP || keyCode == WXK_LEFT || keyCode == WXK_HOME || keyCode == WXK_PAGEUP)
     {
         if (rect.y < startY)
         {
@@ -1375,7 +1375,7 @@ bool wxThumbnailCtrl::HitTest(const wxPoint& pt, int& n)
 
     wxRect rect;
     GetItemRect(itemN, rect);
-    if (rect.Inside(pt))
+    if (rect.Contains(pt))
     {
         n = itemN;
         return true;
@@ -1530,7 +1530,14 @@ bool wxThumbnailItem::DrawBackground(wxDC& dc, wxThumbnailCtrl* ctrl, const wxRe
     if (!filename.IsEmpty())
     {
         wxString file, name, ext;
-        wxSplitPath(filename, & file, & name, & ext);
+        wxFileName fn = (wxFileName)filename;
+        //wxSplitPath(filename, & file, & name, & ext);
+        //file = fn.GetFullPath();
+        //name = fn.GetName();
+        ext = fn.GetExt();
+
+
+
         if (!ext.IsEmpty() && (ctrl->GetWindowStyle() & wxTH_EXTENSION_LABEL))
         {
             ext.MakeUpper();
