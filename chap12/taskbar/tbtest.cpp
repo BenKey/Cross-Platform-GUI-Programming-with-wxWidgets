@@ -154,7 +154,8 @@ void MyDialog::OnAbout(wxCommandEvent& WXUNUSED(event))
 #if defined(__WXMSW__) && wxUSE_TASKBARICON_BALLOONS
     m_taskBarIcon->ShowBalloon(title, message, 15000,
                                wxICON_INFORMATION,
-                               wxBitmapBundle::FromSVGFile("info.svg", wxSize(64, 64))
+                               // wxBitmapBundle::FromSVGFile("info.svg", wxSize(64, 64))
+                               wxIcon(smile2_xpm)
     );
 #else // !__WXMSW__
     wxMessageBox(message, title, wxICON_INFORMATION|wxOK, this);

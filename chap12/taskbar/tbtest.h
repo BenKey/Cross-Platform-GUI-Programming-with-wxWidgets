@@ -22,9 +22,9 @@ public:
     void OnMenuRestore(wxCommandEvent&);
     void OnMenuExit(wxCommandEvent&);
     void OnMenuSetNewIcon(wxCommandEvent&);
-    void OnMenuCheckmark(wxCommandEvent&);
-    void OnMenuUICheckmark(wxUpdateUIEvent&);
-    void OnMenuSub(wxCommandEvent&);
+    /*new*/  void OnMenuCheckmark(wxCommandEvent&);
+    /*new*/  void OnMenuUICheckmark(wxUpdateUIEvent&);
+    /*new*/  void OnMenuSub(wxCommandEvent&);
     virtual wxMenu *CreatePopupMenu() override;
 
     wxDECLARE_EVENT_TABLE();

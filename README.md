@@ -20,7 +20,7 @@ The Book is included in this repo [here](BOOK%20Cross-Platform%20GUI%20Programmi
 ## Take Away points:
 
 ### Buildsystem
-The build system used in this project is CMake, none build system whatsoever were included in the source files from CD-ROM. For Chapter 3; wxApp class is not used at all; and therefore only build as a library and can't be debugged without a test executable. 
+The build system used in this project is CMake, no build system whatsoever were included in the source files from CD-ROM. This poses a few issues if one wishes to build the examples and debug them straight away. For instance, the example in Chapter 3 the wxApp class is not used at all and therefore it can only be build as a library and can't be debugged without a test executable. The CMakeLists.txt file does not nessessarly follow "best practice" as it uses `link_directories()` and file GLOB for file fetching but it is OK in this context. 
 
 For the purpose of simplicity only a single CMakeLists.txt is provided. I'll reserve the learning of using best practises for CMake and test coverage to other resources:
 * CMake: https://www.packtpub.com/en-us/product/cmake-best-practices-9781803239729 & https://github.com/PacktPublishing/CMake-Best-Practices.
@@ -80,7 +80,17 @@ https://github.com/wxWidgets/wxWidgets/tree/WX_2_4_BRANCH/utils/helpview/src/bit
 #### Chapter 12
 
 ##### Taskbar (Notification area) example
-Missing files **smile.xpm** and **tbtest.h** is taken from https://github.com/wxWidgets/wxWidgets/tree/master/samples/taskbar and copied into **chap12/thumbnail/** *last edited by commit id: e43f913 of main branch*. 
+**taskbar.cpp** resembles cloosely the Taskbar example provided from wxWidgets repository (https://github.com/wxWidgets/wxWidgets/tree/master/samples/taskbar). It is best to look past this example from the book since **tbtest.h** is omitted and that **wxDialog::Init** method is deprecated, therefore all initalizations take place in the **wxDialog::wxDialog()** constructor. I will further suggest the following code section for the constructors is not very easy to follow as it straight forwards the initalization tasks to the **wxDialog::Init** method anyways.
+
+```
+MyDialog::MyDialog(wxWindow* parent, const wxWindowID id, const wxString& title,
+    const wxPoint& pos, const wxSize& size, const long windowStyle):
+  wxDialog(parent, id, title, pos, size, windowStyle)
+{
+    Init();
+}
+```
+Therefore the example from the wxWidgets repo is copied and used instead. 
 
 ##### Wizard Example
 Missing file **wiztest.xpm** is copied from https://github.com/wxWidgets/wxWidgets/tree/WX_2_2_BRANCH/samples/wizard. **wiztest2.xpm** were created by simply inverting the colors of **wiztest.xpm** in GIMP editor
