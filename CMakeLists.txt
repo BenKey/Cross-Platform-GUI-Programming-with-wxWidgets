@@ -4,10 +4,11 @@ project(Cross-Platfrom-GUI-Programming-WxWidgets LANGUAGES CXX C)
 find_package(wxWidgets REQUIRED)
 
 message("The sources of the books is old.. see: https://forums.wxwidgets.org/viewtopic.php?t=50926")
+message(STATUS "Detected generator: ${CMAKE_GENERATOR}")
 
-#set (WXWIDGETS_DIR $ENV{WXWIDGETS_DIR} CACHE PATH "wxWidgets binary directory.")
 set (WXWIDGETS_DIR ${wxWidgets_ROOT_DIR} CACHE PATH "wxWidgets binary directory.")
 
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 #if(WIN32)
 #   message("https://cmake.org/cmake/help/latest/variable/WIN32.html?highlight=win32")
@@ -76,7 +77,17 @@ include_directories(
 
 function(CrateExe item )
 	#message(STATUS "item=${item}")
-	string(REPLACE "/" "-" exeName ${item})
+	string(REPLACE "/" ";" pathName ${item})
+	list(LENGTH pathName PathLenght )
+	if ( ( CMAKE_GENERATOR MATCHES "Visual Studio" OR CMAKE_GENERATOR MATCHES "Xcode") AND PathLenght GREATER 1)
+		set(FOLDER_FLAG TRUE)
+	endif()
+	if (FOLDER_FLAG)
+		list(POP_FRONT pathName  exePath)
+		list(JOIN pathName "-" exeName)
+	else()
+		string(REPLACE "/" "-" exeName ${item})
+	endif()
 	#message(STATUS "exeName=${exeName}")
 	message(STATUS "Creating build for: ${exeName}")
 	file(GLOB SRC_FILES ${item}/*.cpp ${item}/*.h ${item}/*.xpm )
@@ -95,6 +106,10 @@ function(CrateExe item )
 					#${WXWIDGETS_PLATFORM_INCLUDE_DIR}
 					#${additionalIncludes}
 					${item})
+	if (FOLDER_FLAG)
+		message(STATUS "exeName=${exeName} ; exePath=${exePath}" )
+		set_target_properties(${exeName} PROPERTIES FOLDER ${exePath})
+	endif()
 endfunction()
 
 foreach(item "chap02" "chap09" "chap10" "chap11" "chap12/thumbnail" "chap12/taskbar" "chap12/wizard" "chap16" "chap17" )
@@ -184,9 +199,24 @@ CrateExe("chap20/pipedprocess")
 #CrateExe("chap20/valconfig")
 
 
-add_library(chap20-findapppath  chap20/findapppath/findapppath.cpp )
-add_library(chap20-launch  chap20/launch/launch.cpp chap20/launch/launch.h  ) 
-add_library(chap20-valconfig  chap20/valconfig/valconfig.cpp chap20/valconfig/valconfig.h  ) 
+if ( CMAKE_GENERATOR MATCHES "Visual Studio" OR CMAKE_GENERATOR MATCHES "Xcode") 
+	add_library(findapppath  chap20/findapppath/findapppath.cpp )
+	set_target_properties(findapppath PROPERTIES FOLDER chap20)
+
+	add_library(launch  chap20/launch/launch.cpp chap20/launch/launch.h  ) 
+	set_target_properties(launch PROPERTIES FOLDER chap20)
+
+	add_library(valconfig  chap20/valconfig/valconfig.cpp chap20/valconfig/valconfig.h  ) 
+	set_target_properties(valconfig PROPERTIES FOLDER chap20)
+
+else()
+	add_library(chap20-findapppath  chap20/findapppath/findapppath.cpp )
+	add_library(chap20-launch  chap20/launch/launch.cpp chap20/launch/launch.h  ) 
+	add_library(chap20-valconfig  chap20/valconfig/valconfig.cpp chap20/valconfig/valconfig.h  ) 
+endif()
+
+
+
 
 
 file(GLOB RIFFLE_SRC riffle/src/*.cpp riffle/src/*.h )
