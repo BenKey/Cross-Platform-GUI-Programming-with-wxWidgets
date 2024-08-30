@@ -5,8 +5,13 @@ find_package(wxWidgets REQUIRED)
 
 message("The sources of the books is old.. see: https://forums.wxwidgets.org/viewtopic.php?t=50926")
 message(STATUS "Detected generator: ${CMAKE_GENERATOR}")
-
+message(STATUS "Detected c compiler: ${CMAKE_C_COMPILER}")
+message(STATUS "Detected c++ compiler: ${CMAKE_CXX_COMPILER}")
 set (WXWIDGETS_DIR ${wxWidgets_ROOT_DIR} CACHE PATH "wxWidgets binary directory.")
+
+
+
+
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -112,7 +117,21 @@ function(CrateExe item )
 	endif()
 endfunction()
 
-foreach(item "chap02" "chap09" "chap10" "chap11" "chap12/thumbnail" "chap12/taskbar" "chap12/wizard" "chap16" "chap17" )
+foreach(item "chap02" 
+			 "chap09"
+			 "chap10"
+			 "chap11"
+			 "chap12/thumbnail"
+			 "chap12/taskbar"
+			 "chap12/wizard"
+			 "chap16"
+			 "chap17"
+			 "chap18/SocketEvents/Client"
+			 "chap18/SocketEvents/Server"
+			 "chap18/SocketStreams/Client"
+			 "chap18/SocketStreams/Server"
+			 "chap19/doodle"
+			 "chap20/pipedprocess" )
 	CrateExe(${item} )
 endforeach()
 
@@ -182,23 +201,6 @@ FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/chap16/flag.png DESTINATION ${CMAKE_BINARY
 
 
 
-
-
-
-
-
-
-CrateExe("chap18/SocketEvents/Client")
-CrateExe("chap18/SocketEvents/Server")
-CrateExe("chap18/SocketStreams/Client")
-CrateExe("chap18/SocketStreams/Server")
-CrateExe("chap19/doodle")
-#CrateExe("chap20/findapppath")
-#CrateExe("chap20/launch")
-CrateExe("chap20/pipedprocess")
-#CrateExe("chap20/valconfig")
-
-
 if ( CMAKE_GENERATOR MATCHES "Visual Studio" OR CMAKE_GENERATOR MATCHES "Xcode") 
 	add_library(findapppath  chap20/findapppath/findapppath.cpp )
 	set_target_properties(findapppath PROPERTIES FOLDER chap20)
@@ -216,12 +218,25 @@ else()
 endif()
 
 
+# if ( CMAKE_CXX_COMPILER MATCHES "cl.exe" )
+# elseif (CMAKE_CXX_COMPILER MATCHES "/gcc" )
+# elseif (CMAKE_CXX_COMPILER MATCHES "/clangc" )
+# if (MSVC)
+#     set (PIPEDPROC_DEBUGGER "devenv" CACHE STRING "Chapter 19 - Piped Process debugger type"  )
+#     set_property(CACHE PIPEDPROC_DEBUGGER PROPERTY STRINGS "gdb" "lldb" "devenv")
+# else()
+#	set (PIPEDPROC_DEBUGGER "gdb" CACHE STRING "Chapter 19 - Piped Process debugger type"  )
+#     set_property(CACHE PIPEDPROC_DEBUGGER PROPERTY STRINGS "gdb" "lldb" "devenv")
+#
+# endif()
+# set (USE_CHM FALSE CACHE BOOL "Use CHM compiled file for Riffle App?")
+# find_package(LLVM REQUIRED CONFIG)
 
 
 
 file(GLOB RIFFLE_SRC riffle/src/*.cpp riffle/src/*.h )
 
-message(STATUS "RIFFLE_SRC=${RIFFLE_SRC}")
+#message(STATUS "RIFFLE_SRC=${RIFFLE_SRC}")
 if(WIN32)
 	add_executable(Riffle-app WIN32 ${RIFFLE_SRC} )
 else()
@@ -238,8 +253,25 @@ target_include_directories(Riffle-app PUBLIC
 # Manual & Help files post-build
 
 #file(GLOB SRC_FILES ${item}/*.cpp ${item}/*.h ${item}/*.xpm )
+
+
+#target_compile_definitions(Riffle-app PUBLIC BUILD_CONFIG="$<CONFIG>")
+
+
+if(WIN32)
+	set (USE_CHM FALSE CACHE BOOL "Use CHM compiled file for Riffle App?")
+	if(USE_CHM)
+		add_compile_definitions(WIN_USE_CHM)
+		set (CHM_PATH "C:/Program Files (x86)/HTML Help Workshop" CACHE PATH "Install Path for \"HTML Help WorkShop\"")
+		add_custom_command( TARGET Riffle-app POST_BUILD
+							COMMAND "${CHM_PATH}/hhc.exe"  " ${CMAKE_CURRENT_SOURCE_DIR}\\riffle\\manual\\riffle.hhp" )#" ${CMAKE_BINARY_DIR}/$<CONFIG>/RiffleManual/rifle.hhp" )
+	endif()
+endif()
+
 add_custom_command( TARGET Riffle-app POST_BUILD
 					COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different "${CMAKE_CURRENT_SOURCE_DIR}/riffle/manual" "${CMAKE_BINARY_DIR}/$<CONFIG>/RiffleManual" )
+
+#target_compile_definitions(Riffle-app PUBLIC BUILD_CONFIG="$<CONFIG>")
 
 #target_link_libraries(Riffle-app wx::net wx::core wx::base)
 

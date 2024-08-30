@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="GENERATOR" content="HelpBlocks">
+<!-- Sitemap 1.0 -->
+</HEAD><BODY>
+<OBJECT type="text/site properties">
+<param name="Font" value="MS Sans Serif,8,0">
+</OBJECT>
+<UL>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Contents">
+      <param name="Local" value="doc-0003.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Welcome to Riffle">
+      <param name="Local" value="doc-0004.htm">
+      </OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Credits">
+        <param name="Local" value="doc-0005.htm">
+        </OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Installation">
+      <param name="Local" value="doc-0006.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Release notes">
+      <param name="Local" value="doc-0007.htm">
+      </OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="What's New?">
+        <param name="Local" value="doc-0077.htm">
+        </OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Riffle user interface">
+      <param name="Local" value="doc-0011.htm">
+      </OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Menubar">
+        <param name="Local" value="doc-0012.htm">
+        </OBJECT>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Main toolbar">
+        <param name="Local" value="doc-0013.htm">
+        </OBJECT>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Directory browser">
+        <param name="Local" value="doc-0015.htm">
+        </OBJECT>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Thumbnail browser">
+        <param name="Local" value="doc-0016.htm">
+        </OBJECT>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Image viewer">
+        <param name="Local" value="doc-0017.htm">
+        </OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Using menubar commands">
+      <param name="Local" value="doc-0041.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Using toolbar commands">
+      <param name="Local" value="doc-0042.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Using dialogs">
+      <param name="Local" value="doc-0043.htm">
+      </OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap">
+        <param name="Name" value="Settings dialog">
+        <param name="Local" value="doc-0044.htm">
+        </OBJECT>
+    <UL>
+      <LI><OBJECT type="text/sitemap">
+          <param name="Name" value="General settings">
+          <param name="Local" value="doc-0045.htm">
+          </OBJECT>
+    </UL>
+  </UL>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Using keyboard shortcuts">
+      <param name="Local" value="doc-0076.htm">
+      </OBJECT>
+</UL>
+</BODY></HTML>

@@ -91,8 +91,11 @@ public:
 
 ////@begin RiffleApp member variables
 ////@end RiffleApp member variables
-
-    wxHtmlHelpController*   m_helpController;
+#ifdef WIN_USE_CHM
+    wxCHMHelpController*   m_helpController;
+#else
+    wxHtmlHelpController*  m_helpController;
+#endif
     wxConfig*               m_config;
     wxString                m_appDir;
 };

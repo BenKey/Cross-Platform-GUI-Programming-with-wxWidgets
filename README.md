@@ -26,7 +26,8 @@ For the purpose of simplicity only a single CMakeLists.txt is provided. I'll res
 * CMake: https://www.packtpub.com/en-us/product/cmake-best-practices-9781803239729 & https://github.com/PacktPublishing/CMake-Best-Practices.
 * Testing coverage (catch2):
   * Writing tests: https://github.com/catchorg/Catch2/blob/devel/docs/tutorial.md.
-  * CMake integrations: https://github.com/catchorg/Catch2/blob/devel/docs/cmake-integration.md
+  * CMake integrations: https://github.com/catchorg/Catch2/blob/devel/docs/cmake-integration.md . 
+  
 
 ### Updated syntaxes (ver 2.6 => 3.2) "Errata" & Additions:
 
@@ -108,11 +109,74 @@ Since the bitmaps were not included in the CD-ROM for the debugger application, 
 *These icon/bitmap files has to be converted to xpm files using GIMP, etc.*
 One may ofcourse use GIMP to make what ever icons one wishes to, and create a custom theme.
 
+This example basically attempts to use **gdb** executable located from from the **path** environmental variable. 
+
 #### Riffle sample App
 * `wxRect::Inside(wxPoint pt)` is replaced by `Contains(wxPoint pt)`.
 * `wxSplitPath(wxString filePath, wxString& fullPath,  wxString& fileName,  wxString& fileExtension)` is replaced by `wxFileName::GetExt()`, etc.
 
+##### HTML Help files
+
+The HTML Help files contains a **HelpBlocks** project file **riffle.wxh** that can be opened and edited. This is now a retired application last updated in 2019 and avaiable in full feature for free. For the convinence, the installation files are added to the **HelpBlockSetup** path of this repo along with registration name holder and key. This software is also available from http://anthemion.co.uk/helpblocks/index.htm. The successor to **HelpBlocks** is [**Jutoh**](https://www.jutoh.com/) and charges a one-time fee of 45 USD for the basic edition.
+
+
+
+
 ## Final Notes:
 Most of the examples uses bitmaps imports directly into the source files, a more modern approach is to handle this into a reperate resource file; e.g.  **sample.rc**.
 
+### HTML Help Content
+For my personal taste, to organize and author HTML help content, I prefer to use **HelpBlocks** to organize the documents with indexes. However for creating the HTML files, I find it sufficient to a common word processor such as Microsoft Office Word, LibreOffice or OpenOffice. This is very neat for as nearly anybody can use these programs and create Help content very fast as they would make just about any other document. Once finished, one may just save the file as HTML document as a "printed" document. Most of HTML artifacts from these generated documents are supported see the [wxHTML documentation](https://docs.wxwidgets.org/stable/overview_html.html). Unsupported features are dropped in the viewer. Usually, the limitations are that the help files should be created very simple manner. Having text floating over images will not be displayed correctly, 
+
+**Option**: One can create a post build command that activates the  *WinHelpCompiledFile.chm*, given that **HTML Help Workshop** is installed, the path to the compiler (really just a file zipper) is typically: `C:\Program Files (x86)\HTML Help Workshop>hhc.exe`. The syntax is `hhc.exe projFile.hhp` For convience, of the user selects the **USE_CHM** CMake flag 
+
+
+
+### Mordernization
+
 The Book along with this repository brings a lot of value to learn how to work directly with wxWidgets and understand how things work under the hood. As you probably already know there are several WYSIWYG editors that allows you to create the basic source code for the GUI. Manually coding as presented in the Book and in this repo is not intended to replace that.
+
+#### Setup Wizards
+The Book does cover Inno Setup scripts for creating distributable setup wizards for installing software on client machines. This is more or less in the same approach for NSIS Setup, but NSIS do have a more advanced script structure that avoids most of the workarounds that the `riffle\scripts\makesetup.sh` does to generate the Inno setup script file from `inno-top-file` and `inno-bottom-file` along with pesky UNIX to DOS lineendings due to using MSIS/CYGWIN.
+
+In 
+
+Since the publication, several things has happened in the Cyber Sequirty space. It now seems that Microsoft and anti-virus vendors can't trust any installers on the web unless the developers provide a hash signature and pays them to whitelist their application. Creating the setup wizard program as is will make Microsoft belive this is a 0-day trojan and generally won't accept the user to launch it (or even keep the file on disk). Therefore, Microsoft Signtool whitin the Windows SDK comes handy to create a digital certificate of the app. 
+
+```
+signtool sign
+/f "path_to_your_certificate.pfx"
+/p "your_certificate_password"
+/t "http://time.windows.com/"
+"file_to_sign.exe"
+```
+
+Recently, Microsoft has released two diffent installer methods
+* MSI -  Database structured approach to fetch - full Win32 application.
+  * WiX Toolset is commonly used for this, 
+  * in CMakeLists.txt, using the CPack (included in CMake) module: 
+  	  ```
+    install(TARGETS coolstuff RUNTIME DESTINATION bin)
+    include(CPack)
+    set(CPACK_PACKAGE_NAME "CoolStuff")
+    set(CPACK_PACKAGE_VENDOR "Cool \"Company\"")
+    set (CPACK_NSIS_MUI_ICON "@CMake_SOURCE_DIR@/Utilities/Release/CMakeLogo.ico")
+    # set the add/remove programs icon using an installed executable
+    SET(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\cmake-gui.exe")
+    set (CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/Utilities/Release\\CMakeInstall.bmp")
+    ```
+* ClickOnce - Automates self-updating applications
+  * - Needs App + Deployment Manifest files; using `Mage.exe`.
+  Please see: https://learn.microsoft.com/en-us/visualstudio/deployment/walkthrough-manually-deploying-a-clickonce-application?view=vs-2022. 
+* APPX - Virtual machine sandboxing for application.
+  * **MSIX Packaging Tool**
+ 
+ `.msi` setup file generated from the [**Windows Installer**](https://learn.microsoft.com/en-us/windows/win32/msi/windows-installer-portal) also included with the Windows SDK. `.msi`. **MSIX Packaging Tool**
+
+Finally, Microsoft has now also a modern distribution channel for distributing software as a service; namely Microsoft Store. Both Free and Paid applications can be published there, but a commisioning fee for paid ones are introduced.
+
+
+#### CI/CD
+* GitHub Actions & Badge: You may run catch2 with `.\compiledTestExe --reporter xml`, save it somewhere accessable, then use an url assembeled from https://shields.io/badges/dynamic-xml-badge in your markdown `README.md`.
+* CyberSecurity: CodeQL may be used to assess unsafe code sections, [unreachable code](https://codeql.github.com/codeql-query-help/go/go-unreachable-statement/) and [unused functions](https://codeql.github.com/codeql-query-help/go/go-unreachable-statement/). Similarly, one can create a badge for the `README.md` by generating a SARIF json document and possibly tally the respective levels with a simple python script.
+* [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html) issues can be reported by [cpplint](https://github.com/cpplint/cpplint). This is just a python script that can be modified to whichever coding conventions you like, and outputs an xml report. 

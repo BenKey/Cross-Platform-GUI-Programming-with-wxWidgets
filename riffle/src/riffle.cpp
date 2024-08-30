@@ -68,15 +68,15 @@ RiffleApp::RiffleApp()
 {
 ////@begin RiffleApp member initialisation
 ////@end RiffleApp member initialisation
-    m_helpController = NULL;
-    m_config = NULL;
+    m_helpController = nullptr;
+    m_config = nullptr;
 }
 
 /*!
  * Initialisation for RiffleApp
  */
 
-bool RiffleApp::OnInit() : helpFilePath(wxHF_DEFAULT_STYLE | wxHF_OPEN_FILES)
+bool RiffleApp::OnInit()  //: helpFilePath(wxHF_DEFAULT_STYLE | wxHF_OPEN_FILES)
 {    
     wxImage::AddHandler( new wxXPMHandler );
     wxImage::AddHandler( new wxPNGHandler );
@@ -96,8 +96,8 @@ bool RiffleApp::OnInit() : helpFilePath(wxHF_DEFAULT_STYLE | wxHF_OPEN_FILES)
 #ifdef __WXDEBUG__
     m_appDir = wxPathOnly(m_appDir);
 #endif
-
-    // m_helpController = new wxHelpController;
+    
+    
 
     // Create a config object that persists for the life of the application
     m_config = new wxConfig(wxT("Riffle"), wxT("Anthemion Software"));
@@ -105,21 +105,41 @@ bool RiffleApp::OnInit() : helpFilePath(wxHF_DEFAULT_STYLE | wxHF_OPEN_FILES)
     // Set initial values, if absent
     InitConfig();
     
+    wxPathList pathlist;
+    bool ret;
     wxString helpFilePath(GetFullAppPath(_T("riffle")));
-#ifdef WIN32
-    helpFilePath = ( (wxFileName) argv[0]).GetPath() + "\\RiffleManual\\riffle_peghelp.htm";
+#if defined(WIN_USE_CHM) && defined(WIN32)
+    m_helpController = new wxCHMHelpController();
+    m_helpController->Initialize( ((wxFileName)argv[0]).GetPath() + "\\RiffleManual\\riffle.chm");
+    m_helpController->LoadFile(((wxFileName)argv[0]).GetPath() + "\\RiffleManual\\riffle.chm");
 #else
-    helpFilePath = ((wxFileName)argv[0]).GetPath() + "/RiffleManual/riffle_peghelp.htm";
+    m_helpController = new wxHtmlHelpController(wxHF_DEFAULT_STYLE | wxHF_OPEN_FILES); //new wxHelpController;
 #endif
-    //m_helpController->Initialize(helpFilePath);
+
+
+#if !defined(WIN_USE_CHM) && defined(WIN32)
+    helpFilePath = ((wxFileName)argv[0]).GetPath()  + "\\RiffleManual\\riffle.hhp";
+    pathlist.Add(((wxFileName)argv[0]).GetPath() + "\\RiffleManual");
+
+
+#elif !defined(WIN32) 
+    helpFilePath = ((wxFileName)argv[0]).GetPath() + "/RiffleManual/riffle.hhp";
+    pathlist.Add(((wxFileName)argv[0]).GetPath() + "/RiffleManual");
+#endif
+
+
+#if !defined(WIN_USE_CHM)
+    m_helpController->Initialize(helpFilePath);
 
     m_helpController->UseConfig(wxConfig::Get());
-    bool ret;
+    //bool ret;
     m_helpController->SetTempDir(".");
 
-    ret = m_helpController->AddBook(helpFilePath);
-    if (!ret)
-        wxMessageBox("Failed adding book " + helpFilePath);
+    //ret = m_helpController->AddBook(helpFilePath);
+    //if (!ret)
+    //    wxMessageBox("Failed adding book " + helpFilePath);
+#endif
+
 
     // Get the window position and size
     wxPoint windowPos = wxDefaultPosition;

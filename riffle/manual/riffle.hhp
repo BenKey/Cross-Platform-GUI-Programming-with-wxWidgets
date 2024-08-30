@@ -1,0 +1,40 @@
+[OPTIONS]
+Compatibility=1.1
+Full-text search=Yes
+Contents file=riffle.hhc
+Compiled file=riffle.chm
+Default Window=Help
+Default topic=doc-0003.htm
+Language=0x809 English (United Kingdom)
+Default Font=MS Sans Serif,8,0
+Index file=riffle.hhk
+Title=Riffle
+
+[WINDOWS]
+Help=,"riffle.hhc","riffle.hhk","doc-0003.htm",,,,,,0x2420,,0x380e,,,,,0,,,
+
+[FILES]
+doc-0003.htm
+doc-0004.htm
+doc-0005.htm
+doc-0006.htm
+doc-0007.htm
+doc-0077.htm
+doc-0011.htm
+doc-0012.htm
+doc-0013.htm
+doc-0015.htm
+doc-0016.htm
+doc-0017.htm
+doc-0041.htm
+doc-0042.htm
+doc-0043.htm
+doc-0044.htm
+doc-0045.htm
+doc-0076.htm
+
+[ALIAS]
+#include "riffle_alias.h"
+
+[MAP]
+#include "riffle_ids.h"

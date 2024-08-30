@@ -1583,7 +1583,7 @@ bool wxThumbnailItem::DrawBackground(wxDC& dc, wxThumbnailCtrl* ctrl, const wxRe
     // rectangle around it
     if (style & wxTHUMBNAIL_IS_FOCUS)
     {
-        wxPen dottedPen(ctrl->GetFocusRectColour(), 1, wxDOT);
+        wxPen dottedPen(ctrl->GetFocusRectColour(), 1, wxDOT); // wxPENSTYLE_DOT
         dc.SetPen(dottedPen);
         dc.SetBrush(*wxTRANSPARENT_BRUSH);
         wxRect focusRect = imageRect;
