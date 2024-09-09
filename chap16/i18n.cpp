@@ -32,6 +32,7 @@
 
 #include "wx/datetime.h"
 #include "wx/image.h"
+#include "wx/filename.h"
 
 // ----------------------------------------------------------------------------
 // resources
@@ -54,8 +55,10 @@ public:
     
     // Recreates m_locale according to lang
     void SelectLanguage(int lang) ;
+    wxString m_appDir;
 private:
     wxLocale* m_locale; // 'our' locale
+    
 };
 
 // Define a new frame type: this is going to be our main frame
@@ -71,6 +74,8 @@ public:
     void OnAbout(wxCommandEvent& event);
 
     void SetupStrings() ;
+    wxString AppPath;
+    int selectedLanguage;
 
 private:
     wxStaticText*   m_helloString ;
@@ -110,6 +115,8 @@ bool MyApp::OnInit()
     m_locale = NULL ;
     SelectLanguage( wxLANGUAGE_DEFAULT ) ;
 
+    m_appDir = argv[0];
+
     MyFrame *frame = new MyFrame(_("i18n wxWidgets App"));
 
     frame->Show(true);
@@ -121,8 +128,8 @@ void MyApp::SelectLanguage(int lang)
 {
     delete m_locale ;
     m_locale = new wxLocale( lang ) ;
-    m_locale->AddCatalogLookupPathPrefix(wxGetCwd());
-    m_locale->AddCatalog( wxT("i18n") )   ;
+    m_locale->AddCatalogLookupPathPrefix(((wxFileName)argv[0]).GetPath());
+    m_locale->AddCatalog( wxT( "i18n"));
 }
 
 MyApp::~MyApp()
@@ -134,17 +141,20 @@ MyApp::~MyApp()
 // ----------------------------------------------------------------------------
 
 // frame constructor
-MyFrame::MyFrame(const wxString& title)
+MyFrame::MyFrame(const wxString& title )
        : wxFrame(NULL, wxID_ANY, title , wxDefaultPosition , wxSize( 400 , 300 ))
 {
     // set the frame icon
     SetIcon(sample_xpm);
+    
+    
+    AppPath = ((wxFileName) wxGetApp().argv[0]).GetPath();
 
     wxPanel *panel  = new wxPanel( this ) ;
     m_helloString   = new wxStaticText( panel , wxID_ANY , wxEmptyString , wxPoint( 10 , 20 ) , wxSize( 100 , 20 ) ) ;
     m_todayString   = new wxStaticText( panel , wxID_ANY , wxEmptyString , wxPoint( 10 , 50 ) , wxSize( 100 , 20 ) ) ;
     m_thousandString = new wxStaticText( panel , wxID_ANY , wxEmptyString , wxPoint( 10 , 80 ) , wxSize( 100 , 20 ) ) ;
-    m_flag = new wxStaticBitmap( panel , wxID_ANY , wxBitmap( _("flag.png") , wxBITMAP_TYPE_PNG ) , wxPoint( 10 , 110 ) ) ;
+    m_flag = new wxStaticBitmap( panel , wxID_ANY , wxBitmap( _(AppPath+"/flag.png") , wxBITMAP_TYPE_PNG ) , wxPoint( 10 , 110 ) ) ;
 
     CreateStatusBar(2);
 
@@ -156,7 +166,23 @@ void MyFrame::SetupStrings()
     m_helloString->SetLabel( _("Welcome to International Sample") ) ;
     m_todayString->SetLabel( wxString::Format(_("Now is %s") , wxDateTime::Now().Format().c_str() ) ) ;
     m_thousandString->SetLabel( wxString::Format(_("12345 divided by 10 is written as %.1f") , 1234.5 ) ) ;
-    m_flag->SetBitmap(wxBitmap( _("flag.png") , wxBITMAP_TYPE_PNG )) ;
+
+    wxString lanuageDir = "/";
+    switch (selectedLanguage)
+    {
+    case wxLANGUAGE_ENGLISH:
+        lanuageDir = "/";
+        break;
+    case wxLANGUAGE_GERMAN:
+        lanuageDir = "/de/";
+        break;
+    case wxLANGUAGE_FRENCH:
+        lanuageDir = "/fr/";
+        break;
+    default:
+        break;
+    }
+    m_flag->SetBitmap(wxBitmap( _(AppPath + lanuageDir +"flag.png") , wxBITMAP_TYPE_PNG )) ;
 
     // create a menu bar
     wxMenu *menuFile = new wxMenu;
@@ -197,7 +223,7 @@ void MyFrame::OnChangeLanguage(wxCommandEvent& WXUNUSED(event))
     languageNames.Add(_("English")) ;
 
     int lang = wxGetSingleChoiceIndex( _("Select language:"), _("Language"), languageNames );
-
+    selectedLanguage = languageCodes[lang];
     if ( lang != -1 )
     {
         wxGetApp().SelectLanguage(languageCodes[lang]);

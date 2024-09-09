@@ -1,31 +1,31 @@
-cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
-project(Cross-Platfrom-GUI-Programming-WxWidgets LANGUAGES CXX C)
+cmake_minimum_required(VERSION 3.27 FATAL_ERROR)
 
+#
+# Project definitions and minimum system requirement, that is having wxWidgets installed on the system.
+#
+project(Cross-Platfrom-GUI-Programming-WxWidgets LANGUAGES CXX C)
 find_package(wxWidgets REQUIRED)
+
+#
+# Header Section for notifying the old sources and checking compiler versions
+#
 
 message("The sources of the books is old.. see: https://forums.wxwidgets.org/viewtopic.php?t=50926")
 message(STATUS "Detected generator: ${CMAKE_GENERATOR}")
 message(STATUS "Detected c compiler: ${CMAKE_C_COMPILER}")
 message(STATUS "Detected c++ compiler: ${CMAKE_CXX_COMPILER}")
+message(STATUS "Detected resource compiler: ${CMAKE_RC_COMPILER}")
 set (WXWIDGETS_DIR ${wxWidgets_ROOT_DIR} CACHE PATH "wxWidgets binary directory.")
 
 
+#
+# Global configurations for all the compiled targets
+#
 
-
-
+# For certain IDEs like Visual Studio and Xcode supports organizing the targets in internal folders.
+# (Be aware this is only in IDE not in file structures in e.g. file explorer.)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-#if(WIN32)
-#   message("https://cmake.org/cmake/help/latest/variable/WIN32.html?highlight=win32")
-#elseif(APPLE)
-#   message("https://cmake.org/cmake/help/latest/variable/APPLE.html?highlight=apple")
-#elseif(UNIX)
-#    message("https://cmake.org/cmake/help/latest/variable/UNIX.html?highlight=unix")
-#endif()
-
-#target_link_libraries(
-#target_link_directories(02_Minimal ${wxWidgets_LIB_DIR})
-#target_link_libraries(02_Minimal ${wxWidgets_LIBRARIES})
 
 
 if (MSVC)
@@ -33,21 +33,19 @@ if (MSVC)
 	set (WXWIDGETS_PLATFORM_INCLUDE_DIR ${WXWIDGETS_DIR}/include 
 					    ${WXWIDGETS_DIR}/include/msvc
   					    ${WXWIDGETS_DIR}/lib/vc_x64_lib/mswu/wx )
+else()
+	set (WXWIDGETS_LIBS_DIR ${WXWIDGETS_DIR}/lib)
+	set (WXWIDGETS_PLATFORM_INCLUDE_DIR ${WXWIDGETS_DIR}/include 
+					    ${WXWIDGETS_DIR}/include
+  					    ${WXWIDGETS_DIR}/lib/wx )
 endif ()
 
+# Global link directories to wxWidgets. This applies to all compiled targets in the project; fine for this scope.
 link_directories (${WXWIDGETS_LIBS_DIR})
 message(STATUS "WXWIDGETS_LIBS_DIR=${WXWIDGETS_LIBS_DIR}")
 
-#target_compile_definitions(my_target PUBLIC foo=1 bar=2)
-
-#add_compile_definitions(WinMain)
+# Global _UNICODE definition - wxWidgets requires this
 add_compile_definitions(_UNICODE )
-#add_compile_definitions(wxTOOLKIT_PREFIX=${wxWidgets_CONFIGURATION})
-#remove_definitions()
-
-#set(commonIncludes PUBLIC ${VSE_DEVKIT_DIR}/include
-#		${WXWIDGETS_DIR}/include
-#		${WXWIDGETS_PLATFORM_INCLUDE_DIR )
 
 
 include_directories( 
@@ -55,30 +53,9 @@ include_directories(
 					${WXWIDGETS_PLATFORM_INCLUDE_DIR}
 					)
 
-
-
-#target_link_libraries(02_Minimal wx::net wx::core wx::base)
-
-
-
-#file (GLOB wxWidgetsTestAppHeaderFiles chap02/*.hpp chap02/*.h)
-#file (GLOB wxWidgetsTestAppSourceFiles chap02/*.cpp)
-#set (
-#	wxWidgetsTestAppFiles
-#	${wxWidgetsTestAppHeaderFiles}
-#	${wxWidgetsTestAppSourceFiles}
-#)
-
-
-#foreach(Number RANGE 2 20 )
-#	
-#	if (Number LESS 10)
-#		set(examplePrefix "0${Number}")
-#	else ()
-#		set(examplePrefix "${Number}")
-#	endif()
-#endforeach()
-
+#
+# Main function "CrateExe" to create the targets of the source code organized in "item" (Path)
+#
 
 function(CrateExe item )
 	#message(STATUS "item=${item}")
@@ -112,10 +89,16 @@ function(CrateExe item )
 					#${additionalIncludes}
 					${item})
 	if (FOLDER_FLAG)
-		message(STATUS "exeName=${exeName} ; exePath=${exePath}" )
+		#message(STATUS "exeName=${exeName} ; exePath=${exePath}" )
 		set_target_properties(${exeName} PROPERTIES FOLDER ${exePath})
 	endif()
 endfunction()
+
+
+
+#
+# For-loop to create all the compiled targets, except libraries and the Riffle app.
+#
 
 foreach(item "chap02" 
 			 "chap09"
@@ -131,7 +114,8 @@ foreach(item "chap02"
 			 "chap18/SocketStreams/Client"
 			 "chap18/SocketStreams/Server"
 			 "chap19/doodle"
-			 "chap20/pipedprocess" )
+			 #"chap20/pipedprocess"
+			   )
 	CrateExe(${item} )
 endforeach()
 
@@ -142,65 +126,18 @@ endforeach()
 file(GLOB Chap03_SRC  chap03/* )
 add_library(chap03  ${Chap03_SRC} ) # ${additionalSources})
 
-
-
-
-
-#file(GLOB SRC_FILES_chap12	chap12/*.cpp chap12/*.h chap12/*.xpm  )
-#file(GLOB ThumbNailFiles	chap12/thumbnail/*.cpp chap12/thumbnail/*.h chap12/*.xpm ) 
-#if(WIN32)
-#	add_executable(chap12 WIN32 ${SRC_FILES_chap12} ${ThumbNailFiles}  )
-#else()
-#	add_executable(chap12  ${SRC_FILES} ${ThumbNailFiles} )
-#endif()
-#target_include_directories(chap12 PUBLIC 
-					#${WXWIDGETS_DIR}/include
-					#${WXWIDGETS_PLATFORM_INCLUDE_DIR}
-#					"chap12/thumbnail"
-#					"chap12")
-
-
-
-
-
-
-#add_custom_command(
-#	TARGET "chap16" POST_BUILD
- #   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/chap16/flag.png  ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/flag.png #${CMAKE_CURRENT_BINARY_DIR}/flag.png
-#)
-#message(STATUS "CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}S")
-
-#if (CMAKE_BUILD_TYPE)
-#	message(STATUS "CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
-#	FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/chap16/flag.png DESTINATION "${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}")
-#elseif(CMAKE_CONFIGURATION_TYPES)
-#	foreach(buildType ${CMAKE_CONFIGURATION_TYPES})
-#		message(STATUS "CMAKE_CONFIGURATION_TYPE=${buildType}")
-#		FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/chap16/flag.png DESTINATION "${CMAKE_BINARY_DIR}/${buildType}")
-#	endforeach()
-#endif()
-
-
-#FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/chap16/flag.png DESTINATION "${CMAKE_BINARY_DIR}/$<CONFIG>" )
 add_custom_command( TARGET "chap16" POST_BUILD
 					COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/chap16/flag.png "${CMAKE_BINARY_DIR}/$<CONFIG>/" )
-FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/chap16/flag.png DESTINATION ${CMAKE_BINARY_DIR})
-
-#message(STATUS "Creating build for: chap16")
-#file(GLOB chap16_SRC chap16/*.cpp chap16/*.h chap16/*.xpm chap16/*.png )
-#
-#if(WIN32)
-#	add_executable(chap16 WIN32 ${chap16_SRC} ) # ${additionalSources})
-#else()
-#	add_executable(chap16  ${chap16_SRC} ) # ${additionalSources})
-#endif()
-#target_include_directories(chap16 PUBLIC 
-#				chap16)
+add_custom_command( TARGET "chap16" POST_BUILD
+					COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different "${CMAKE_CURRENT_SOURCE_DIR}/chap16/de" "${CMAKE_BINARY_DIR}/$<CONFIG>/de" )
+add_custom_command( TARGET "chap16" POST_BUILD
+					COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different "${CMAKE_CURRENT_SOURCE_DIR}/chap16/fr" "${CMAKE_BINARY_DIR}/$<CONFIG>/fr" )
+#FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/chap16/flag.png DESTINATION ${CMAKE_BINARY_DIR})
 
 
 
 
-
+# Chapter 20 builds of libraries 
 if ( CMAKE_GENERATOR MATCHES "Visual Studio" OR CMAKE_GENERATOR MATCHES "Xcode") 
 	add_library(findapppath  chap20/findapppath/findapppath.cpp )
 	set_target_properties(findapppath PROPERTIES FOLDER chap20)
@@ -218,25 +155,12 @@ else()
 endif()
 
 
-# if ( CMAKE_CXX_COMPILER MATCHES "cl.exe" )
-# elseif (CMAKE_CXX_COMPILER MATCHES "/gcc" )
-# elseif (CMAKE_CXX_COMPILER MATCHES "/clangc" )
-# if (MSVC)
-#     set (PIPEDPROC_DEBUGGER "devenv" CACHE STRING "Chapter 19 - Piped Process debugger type"  )
-#     set_property(CACHE PIPEDPROC_DEBUGGER PROPERTY STRINGS "gdb" "lldb" "devenv")
-# else()
-#	set (PIPEDPROC_DEBUGGER "gdb" CACHE STRING "Chapter 19 - Piped Process debugger type"  )
-#     set_property(CACHE PIPEDPROC_DEBUGGER PROPERTY STRINGS "gdb" "lldb" "devenv")
 #
-# endif()
-# set (USE_CHM FALSE CACHE BOOL "Use CHM compiled file for Riffle App?")
-# find_package(LLVM REQUIRED CONFIG)
-
-
+# Configure the Riffle example application
+#
 
 file(GLOB RIFFLE_SRC riffle/src/*.cpp riffle/src/*.h )
 
-#message(STATUS "RIFFLE_SRC=${RIFFLE_SRC}")
 if(WIN32)
 	add_executable(Riffle-app WIN32 ${RIFFLE_SRC} )
 else()
@@ -247,34 +171,168 @@ target_include_directories(Riffle-app PUBLIC
 				${WXWIDGETS_DIR}/include
 				${WXWIDGETS_PLATFORM_INCLUDE_DIR}
 				riffle/src
-				riffle/manual)
+				)
 
-
-# Manual & Help files post-build
-
-#file(GLOB SRC_FILES ${item}/*.cpp ${item}/*.h ${item}/*.xpm )
-
-
-#target_compile_definitions(Riffle-app PUBLIC BUILD_CONFIG="$<CONFIG>")
-
-
+#
+# Riffle Manual & Help files post-build
+#
+ 
+# Logic for post-build of the compiled help contents (chm)
 if(WIN32)
 	set (USE_CHM FALSE CACHE BOOL "Use CHM compiled file for Riffle App?")
 	if(USE_CHM)
 		add_compile_definitions(WIN_USE_CHM)
-		set (CHM_PATH "C:/Program Files (x86)/HTML Help Workshop" CACHE PATH "Install Path for \"HTML Help WorkShop\"")
-		add_custom_command( TARGET Riffle-app POST_BUILD
+		# Try to find the hhc.exe compiler on a x64 system, then x32 bit system.
+		if (EXISTS "C:/Program Files (x86)/HTML Help Workshop/hhc.exe")
+			set (CHM_PATH "C:/Program Files (x86)/HTML Help Workshop" CACHE PATH "Install Path for \"HTML Help WorkShop\"")
+		elseif(EXISTS "C:/Program Files/HTML Help Workshop/hhc.exe")
+			set (CHM_PATH "C:/Program Files/HTML Help Workshop" CACHE PATH "Install Path for \"HTML Help WorkShop\"")
+		else()
+			message(WARNING "HTML Help Workshop not found on system. Consider to install ${CMAKE_CURRENT_SOURCE_DIR}/Tools/htmlhelp.exe")
+			set (CHM_PATH "NOT_FOUND" CACHE PATH "Install Path for \"HTML Help WorkShop\"")
+		endif()
+
+		if(EXISTS "${CHM_PATH}/hhc.exe")
+			add_custom_command( TARGET Riffle-app POST_BUILD
 							COMMAND "${CHM_PATH}/hhc.exe"  " ${CMAKE_CURRENT_SOURCE_DIR}\\riffle\\manual\\riffle.hhp" )#" ${CMAKE_BINARY_DIR}/$<CONFIG>/RiffleManual/rifle.hhp" )
+		endif()
 	endif()
 endif()
 
+# Move over the HTML help files to the build directory after successful build.
 add_custom_command( TARGET Riffle-app POST_BUILD
 					COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different "${CMAKE_CURRENT_SOURCE_DIR}/riffle/manual" "${CMAKE_BINARY_DIR}/$<CONFIG>/RiffleManual" )
 
-#target_compile_definitions(Riffle-app PUBLIC BUILD_CONFIG="$<CONFIG>")
 
-#target_link_libraries(Riffle-app wx::net wx::core wx::base)
+#
+# Riffle Wizard Installer Package creation (optional)
+#
 
-#include_directories()
-#link_directories()
-#${wxWidgets_LIB_DIR}/
+
+set( RIFFLE_WIZARD FALSE CACHE BOOL "Create a distributable Setup Wizard for end-user installation?")
+
+if(RIFFLE_WIZARD)
+	# Set the package 
+	if(WIN32)
+		# Set the package 
+		set (RIFFLE_WIZARD_CREATOR "NSIS" CACHE STRING "Selected Package creator"  )
+		set_property(CACHE RIFFLE_WIZARD_CREATOR PROPERTY STRINGS "InnoSetup" "NSIS" "WiX")
+		#set (RIFFLE_SIGN_APP FALSE CACHE BOOL "Create a signature for the Riffle App?")
+	elseif(APPLE)
+		set (RIFFLE_WIZARD_CREATOR "ProductBuild" CACHE STRING "Selected Package creator"  )
+	endif()
+
+
+
+
+
+
+	message(STATUS "Preparing CPack distributiom" )
+	# Create signatures for the application
+	install(TARGETS Riffle-app
+		DESTINATION bin) # . # Here, bin is the relative path to the application, e.g. for Windows: C:\ProgramFiles\Anthemion\Riffle App\bin
+	
+	file(GLOB RIFFLE_MAN riffle/manual/* )	
+	install(FILES ${RIFFLE_MAN}
+		DESTINATION bin/manual)
+
+    
+	include (InstallRequiredSystemLibraries) 
+	#include(CPack)
+
+	# Add other files too: installing a config file (just as example, real application will rather use %ProgramData% )
+	#install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/Config.xml" DESTINATION .)
+    
+	# semver versoning numbers.
+	set(PROJECT_VERSION_MAJOR 1) # Uncompatible to previous versions (e.g. files, network protocols, etc.)
+	set(PROJECT_VERSION_MINOR 0) # New feature
+	set(PROJECT_VERSION_PATCH 0) # Bugfix
+
+	#set(CPACK_INSTALL_CMAKE_PROJECTS  "SubProject;Riffle-App;ALL;/")
+
+	# Generic CPack settings
+	set(CPACK_PACKAGE_NAME "Riffle App")
+    set(CPACK_PACKAGE_VENDOR "Anthemion")
+	set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Directory picture thumbnail viewer")
+	set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})  # Name of subfolder under 'Program Files'
+	set(CPACK_PACKAGE_VERSION    "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}")
+	set(CPACK_PACKAGE_VERSION_MAJOR    ${PROJECT_VERSION_MAJOR})
+	set(CPACK_PACKAGE_VERSION_MINOR    ${PROJECT_VERSION_MINOR})
+	set(CPACK_PACKAGE_VERSION_PATCH    ${PROJECT_VERSION_PATCH})
+	set(CPACK_VERBATIM_VARIABLES       TRUE)         # Ensure correct escaping - always set to true
+
+	#Set resources used by the Windows installer
+	#set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/riffle/docs/license.txt")
+	#set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/riffle/src/bitmaps/riffle.ico") # Logo in installer window
+
+	#Start Menu Shortcuts: executable without .exe and text label
+	#set(CPACK_PACKAGE_EXECUTABLES "Riffle App" "Riffle Application") 
+	#set(CPACK_CREATE_DESKTOP_LINKS "Riffle Application") # Desktop 
+
+	
+	
+ 
+	#set(CPACK_PACKAGE_INSTALL_REGISTRY_KEY ${PROJECT_NAME})
+	set(CPACK_SOURCE_GENERATOR "TGZ")
+	set(CPACK_SOURCE_PACKAGE_FILE_NAME  ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION} )
+	set(CPACK_SOURCE_IGNORE_FILES ${CPACK_IGNORE_FILES})
+endif()
+
+
+if(RIFFLE_WIZARD_CREATOR STREQUAL "InnoSetup")
+	message(STATUS "Preparing Inno Setup Install wizard" )
+	set(CPACK_GENERATOR "INNOSETUP")
+    set(CPACK_INNOSETUP_SETUP_UninstallDisplayIcon "${CMAKE_CURRENT_SOURCE_DIR}/riffle/src/bitmaps/riffle.ico") 
+    set(CPACK_INNOSETUP_SETUP_SetupIconFile "${CMAKE_CURRENT_SOURCE_DIR}/riffle/src/bitmaps/riffle.ico")
+       
+    #Executable that user can run at end of install. It refers CPACK_PACKAGE_EXECUTABLES above.
+    set ( CPACK_INNOSETUP_RUN_EXECUTABLES Riffle-app ) 
+    
+    # OPTIONAL: Set up custom script for Inno Setup. Your Pascal functions to add in [code] block  
+    # set (CPACK_INNOSETUP_CODE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/codefile.iss")
+endif()
+
+if(RIFFLE_WIZARD_CREATOR STREQUAL "NSIS")
+	message(STATUS "Preparing NSIS Install wizard" )
+	set(CPACK_GENERATOR "NSIS")
+	#set(CPACK_NSIS_HELP_LINK "http://www.anthemion.co.uk/index.htm")
+	#set(CPACK_NSIS_URL_INFO_ABOUT "http://www.anthemion.co.uk/aboutus.htm")
+	#set(CPACK_NSIS_CONTACT "harriet@anthemion.co.uk")
+	#set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}/riffle/src/bitmaps/riffle.ico" )
+	#set(CPACK_NSIS_INSTALLED_ICON_NAME "${CMAKE_CURRENT_SOURCE_DIR}/riffle/src/bitmaps/riffle.ico" ) 
+	#set (CPACK_NSIS_MODIFY_PATH "ON")
+
+	# the NSIS installer script that CMake will read from and substitute the values into:
+	#set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/assets/nsis ${CMAKE_MODULE_PATH})
+
+	#configure_file(
+	#	${PROJECT_SOURCE_DIR}/riffle/scripts/nsis/NSIS.definitions.nsh.in
+	#	${CMAKE_CURRENT_BINARY_DIR}/riffle/scripts/nsis/NSIS.definitions.nsh.in
+	#)
+
+	#set (CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
+    # WriteRegStr HKCR '.cool' '' 'CoolFile'
+	# System::Call \\
+    #   'Shell32::SHChangeNotify(i 0x8000000, i 0, i 0, i 0)'" )
+
+	#set (CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "
+    # DeleteRegKey HKCR '.cool'
+	# ")
+
+	# set(CPACK_NSIS_CREATE_ICONS_EXTRA "CreateShortCut '$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\abc.lnk' '$INSTDIR\\\\bin\\\\abc.exe' ")
+
+endif()
+
+if(RIFFLE_WIZARD_CREATOR STREQUAL "WiX")
+	message(STATUS "Preparing WiX Install wizard" )
+	set(CPACK_GENERATOR WIX)
+	# set(CPACK_WIX "${CMAKE_CURRENT_SOURCE_DIR}/riffle/src/bitmaps/riffle.ico" )
+endif()
+
+if(RIFFLE_WIZARD_CREATOR STREQUAL "ProductBuild")
+endif()
+
+
+if(RIFFLE_WIZARD)
+	include(CPack)
+endif()

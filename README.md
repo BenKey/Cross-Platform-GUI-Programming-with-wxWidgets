@@ -109,7 +109,9 @@ Since the bitmaps were not included in the CD-ROM for the debugger application, 
 *These icon/bitmap files has to be converted to xpm files using GIMP, etc.*
 One may ofcourse use GIMP to make what ever icons one wishes to, and create a custom theme.
 
-This example basically attempts to use **gdb** executable located from from the **path** environmental variable. 
+This example basically attempts to use `gdb` (Gnu Debugger) executable located from from the **path** environmental variable. For windows, this is typically provided in a MSYS/CYGWIN environment. One may use the invoke the Visual C++ debugger (throu Visual Studio GUI) by: `devenv /debugexe <some-exe-file> /log logfile.txt`; this is . Alternatively, one may use `lldb` that is shipped with the LLVM compiler collection *(You may even install LLVM with the Visual Studio installer wizard!)*
+
+For the CMakeLists.txt, you may choose to opt in for `gdb`, `lldb` or `devenv` with a log file watcher if MSVC is the target generator. 
 
 #### Riffle sample App
 * `wxRect::Inside(wxPoint pt)` is replaced by `Contains(wxPoint pt)`.
@@ -128,7 +130,7 @@ Most of the examples uses bitmaps imports directly into the source files, a more
 ### HTML Help Content
 For my personal taste, to organize and author HTML help content, I prefer to use **HelpBlocks** to organize the documents with indexes. However for creating the HTML files, I find it sufficient to a common word processor such as Microsoft Office Word, LibreOffice or OpenOffice. This is very neat for as nearly anybody can use these programs and create Help content very fast as they would make just about any other document. Once finished, one may just save the file as HTML document as a "printed" document. Most of HTML artifacts from these generated documents are supported see the [wxHTML documentation](https://docs.wxwidgets.org/stable/overview_html.html). Unsupported features are dropped in the viewer. Usually, the limitations are that the help files should be created very simple manner. Having text floating over images will not be displayed correctly, 
 
-**Option**: One can create a post build command that activates the  *WinHelpCompiledFile.chm*, given that **HTML Help Workshop** is installed, the path to the compiler (really just a file zipper) is typically: `C:\Program Files (x86)\HTML Help Workshop>hhc.exe`. The syntax is `hhc.exe projFile.hhp` For convience, of the user selects the **USE_CHM** CMake flag 
+**Option**: One can create a post build command that activates the  *WinHelpCompiledFile.chm*, given that **HTML Help Workshop** is installed, the path to the compiler (really just a file zipper) is typically: `C:\Program Files (x86)\HTML Help Workshop\hhc.exe`. The syntax is `hhc.exe projFile.hhp` For convience, of the user selects the **USE_CHM** CMake flag 
 
 
 
@@ -136,13 +138,23 @@ For my personal taste, to organize and author HTML help content, I prefer to use
 
 The Book along with this repository brings a lot of value to learn how to work directly with wxWidgets and understand how things work under the hood. As you probably already know there are several WYSIWYG editors that allows you to create the basic source code for the GUI. Manually coding as presented in the Book and in this repo is not intended to replace that.
 
-#### Setup Wizards
-The Book does cover Inno Setup scripts for creating distributable setup wizards for installing software on client machines. This is more or less in the same approach for NSIS Setup, but NSIS do have a more advanced script structure that avoids most of the workarounds that the `riffle\scripts\makesetup.sh` does to generate the Inno setup script file from `inno-top-file` and `inno-bottom-file` along with pesky UNIX to DOS lineendings due to using MSIS/CYGWIN.
+*TODO*: I intent to use the Riffle App as a viehle to showcase the modernizations that can be made to an application. 
 
-In 
+#### Multi-lingual applications
 
+As demonstrated in a limited language selection in **chap16** example, multilingual applications can be transleted with `*.po` files. These files can be viewed and edited in e.g. [poedit](https://poedit.net/). When deciding on which languages to choose when making an application, you would likely consider the following:
+* Supporting many languages introduces a lot of upkeep when updating the application with new features. This can however be automated away by a translation engine. In recent time, LLMs with billions of model parameters can be trained on millions of translation examples. One such open source model is [BigTranslate](https://github.com/ZNLP/BigTranslate). Using this however takes about 26 GB of disk space and scores worse than *Google Translate*. This is probably OK for meny item translations, but for HTML help files, this likely needs more careful though.
+* What is your target audience or demography? - does it makes sence to support *Icelandic*?. For example, If your application is intendeded for very tech savvy users around the globe, chances are that *English* is more than sufficient.
+* Profile your geographic marked - access [English proficeny score index](https://en.wikipedia.org/wiki/EF_English_Proficiency_Index) and evalute the need.
+* What markets are actually available for you? There are several trade-embargoed countries (and even a list of prohibited persons), that is effected by a ban of distributiong software (dual-use) that might be used for military applications (such as ERP - belive is or not). If your software is applicable for this criteria, it may not be worthwile at the time of wrting to support *Russian* etc for this very reason.
+
+
+
+
+#### Signing the application
 Since the publication, several things has happened in the Cyber Sequirty space. It now seems that Microsoft and anti-virus vendors can't trust any installers on the web unless the developers provide a hash signature and pays them to whitelist their application. Creating the setup wizard program as is will make Microsoft belive this is a 0-day trojan and generally won't accept the user to launch it (or even keep the file on disk). Therefore, Microsoft Signtool whitin the Windows SDK comes handy to create a digital certificate of the app. 
 
+An example to sign the application is provided here (and provided as an option for the Riffle app):
 ```
 signtool sign
 /f "path_to_your_certificate.pfx"
@@ -150,28 +162,56 @@ signtool sign
 /t "http://time.windows.com/"
 "file_to_sign.exe"
 ```
+This has to be performed for *every* release that is created, and best suited to be automated by the  
 
-Recently, Microsoft has released two diffent installer methods
-* MSI -  Database structured approach to fetch - full Win32 application.
+
+creating the certificate *"path_to_your_certificate.pfx"* can be perfomred with powershell commands 
+```
+New-SelfSignedCertificate
+  -Type Custom
+  -Subject "CN=<Org Namespace>, O=<Org Name>, C=<Org-CountryCode>"
+  -KeyUsage DigitalSignature
+  -FriendlyName "My Friendly Cert Name"
+  -CertStoreLocation "Cert:\CurrentUser\My"
+  -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}")
+Export-PfxCertificate
+  -cert Cert:\CurrentUser\My\<Certificate Thumbprint>
+  -FilePath <FilePath>.pfx
+  -ProtectTo <Username or group name>
+```
+Please see [New-SelfSignedCertificate documentation](https://learn.microsoft.com/en-us/powershell/module/pki/new-selfsignedcertificate?view=windowsserver2022-ps) and 
+
+#### Setup Wizards
+The Book does cover Inno Setup scripts for creating distributable setup wizards for installing software on client machines. This is more or less in the same approach for NSIS Setup, but NSIS do have a more advanced script structure that avoids most of the workarounds that the `riffle\scripts\makesetup.sh` does to generate the Inno setup script file from `inno-top-file` and `inno-bottom-file` along with pesky UNIX to DOS lineendings due to using MSIS/CYGWIN. 
+
+For this reason, I have provided an option in the CMakeLists.txt to create either a NSIS and/or Inno setup wizard.  
+
+For the past two decades, Microsoft has released three diffent installer methods ()
+* MSI -  Database structured approach to fetch install media remotely - full Win32 application.
   * WiX Toolset is commonly used for this, 
   * in CMakeLists.txt, using the CPack (included in CMake) module: 
   	  ```
     install(TARGETS coolstuff RUNTIME DESTINATION bin)
-    include(CPack)
+    
+    set(CPACK_GENERATOR WIX)
     set(CPACK_PACKAGE_NAME "CoolStuff")
     set(CPACK_PACKAGE_VENDOR "Cool \"Company\"")
     set (CPACK_NSIS_MUI_ICON "@CMake_SOURCE_DIR@/Utilities/Release/CMakeLogo.ico")
     # set the add/remove programs icon using an installed executable
-    SET(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\cmake-gui.exe")
+    set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\cmake-gui.exe")
     set (CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/Utilities/Release\\CMakeInstall.bmp")
+    include(CPack)
     ```
-* ClickOnce - Automates self-updating applications
+    Running the Cpack compiler after running CMake is fairly straight forward: `cpack -C Release --config ./<build directory>/CPackConfig.cmake`, or throu the IDE, CMake has a predefined target `PACKAGE`.
+* ClickOnce - Only for .NET desktop applications. However Visual C++ applications are also covered if they are dependencies to the .NET project. ClickOnce automates self-updating applications with simplified security permissions. [read more here](https://learn.microsoft.com/en-us/visualstudio/deployment/clickonce-security-and-deployment?view=vs-2022)
   * - Needs App + Deployment Manifest files; using `Mage.exe`.
   Please see: https://learn.microsoft.com/en-us/visualstudio/deployment/walkthrough-manually-deploying-a-clickonce-application?view=vs-2022. 
-* APPX - Virtual machine sandboxing for application.
+* APPX - Virtual machine sandboxing for application. This reduces the external resources that the application can use from the Windows system. 
   * **MSIX Packaging Tool**
  
  `.msi` setup file generated from the [**Windows Installer**](https://learn.microsoft.com/en-us/windows/win32/msi/windows-installer-portal) also included with the Windows SDK. `.msi`. **MSIX Packaging Tool**
+
+One should also consider if you intend that the application may not need Administrator premissions to install for the end-user. If the software is placed in **%APPDATA%** instead of **C:\Program Files**, you only use local user rights. This is usually encapsulated in the wizard telling the user to install for all users (requires admin privledges) or "just for me". 
 
 Finally, Microsoft has now also a modern distribution channel for distributing software as a service; namely Microsoft Store. Both Free and Paid applications can be published there, but a commisioning fee for paid ones are introduced.
 
