@@ -21,6 +21,8 @@
 
 // For compilers that support precompilation, includes "wx/wx.h".
 #include "wx/wxprec.h"
+#include "wx/string.h"
+#include "wx/filename.h"
 
 #ifdef __BORLANDC__
 #  pragma hdrstop
@@ -198,5 +200,6 @@ void MyFrame::OnServerEvent(wxSocketEvent& WXUNUSED(event))
 	m_text->AppendText(_("\nBeginning file transfer."));
 
 	// Start the file transfer
-	new CFileSendThread(wxT("ReadFrom.jpg"), sock);
+	
+	new CFileSendThread( ((wxFileName)wxGetApp().argv[0]).GetPath() + "/ReadFrom.jpg" , sock);
 }
