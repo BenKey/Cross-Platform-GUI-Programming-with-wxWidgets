@@ -97,12 +97,12 @@ enum
 // event tables and other macros for wxWidgets
 // --------------------------------------------------------------------------
 
-BEGIN_EVENT_TABLE(MyFrame, wxFrame)
+wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
 	EVT_MENU(SERVER_QUIT, MyFrame::OnQuit)
 	EVT_SOCKET(SERVER_ID, MyFrame::OnServerEvent)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
-IMPLEMENT_APP(MyApp)
+wxIMPLEMENT_APP(MyApp);
 
 
 // ==========================================================================

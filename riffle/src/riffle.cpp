@@ -40,25 +40,25 @@
  */
 
 ////@begin implement app
-IMPLEMENT_APP( RiffleApp )
+wxIMPLEMENT_APP(RiffleApp);
 ////@end implement app
 
 /*!
  * RiffleApp type definition
  */
 
-IMPLEMENT_CLASS( RiffleApp, wxApp )
+wxIMPLEMENT_CLASS( RiffleApp, wxApp )
 
 /*!
  * RiffleApp event table definition
  */
 
-BEGIN_EVENT_TABLE( RiffleApp, wxApp )
+wxBEGIN_EVENT_TABLE( RiffleApp, wxApp )
 
 ////@begin RiffleApp event table entries
 ////@end RiffleApp event table entries
 
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 /*!
  * Constructor for RiffleApp

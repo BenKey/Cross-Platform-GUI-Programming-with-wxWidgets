@@ -12,12 +12,12 @@
 #include "wx/wx.h"
 #include "processapp.h"
 
-IMPLEMENT_CLASS(PipedProcess, wxProcess)
-IMPLEMENT_CLASS(ProcessApp, wxApp)
+wxIMPLEMENT_CLASS(PipedProcess, wxProcess)
+wxIMPLEMENT_CLASS(ProcessApp, wxApp)
 
-BEGIN_EVENT_TABLE(ProcessApp, wxApp)
+wxBEGIN_EVENT_TABLE(ProcessApp, wxApp)
 	EVT_IDLE(ProcessApp::OnIdle)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 /// Register a process with the application, and start
 /// idle timer if necessary

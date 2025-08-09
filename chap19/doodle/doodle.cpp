@@ -28,7 +28,7 @@
 
 #include "doodle.xpm"
 
-IMPLEMENT_APP(DoodleApp)
+wxIMPLEMENT_APP(DoodleApp);
 
 DoodleApp::DoodleApp()
 {
@@ -73,11 +73,11 @@ int DoodleApp::OnExit()
 * This is the top-level window of the application.
 */
 
-IMPLEMENT_CLASS(DoodleFrame, wxDocParentFrame)
+wxIMPLEMENT_CLASS(DoodleFrame, wxDocParentFrame)
 
-BEGIN_EVENT_TABLE(DoodleFrame, wxDocParentFrame)
+wxBEGIN_EVENT_TABLE(DoodleFrame, wxDocParentFrame)
     EVT_MENU(DOCVIEW_ABOUT, DoodleFrame::OnAbout)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 DoodleFrame::DoodleFrame(wxDocManager *manager, wxFrame *parent, wxWindowID id, const wxString& title,
                  const wxPoint& pos, const wxSize& size, long type):

@@ -48,12 +48,12 @@ IMPLEMENT_DYNAMIC_CLASS( GeneralSettingsPage, wxPanel )
  * GeneralSettingsPage event table definition
  */
 
-BEGIN_EVENT_TABLE( GeneralSettingsPage, wxPanel )
+wxBEGIN_EVENT_TABLE( GeneralSettingsPage, wxPanel )
 
 ////@begin GeneralSettingsPage event table entries
 ////@end GeneralSettingsPage event table entries
 
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 /*!
  * GeneralSettingsPage constructors

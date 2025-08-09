@@ -238,21 +238,21 @@ private:
 // event tables and such
 // ----------------------------------------------------------------------------
 
-BEGIN_EVENT_TABLE(MyFrame, wxFrame)
+wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(Wizard_Quit,  MyFrame::OnQuit)
     EVT_MENU(Wizard_About, MyFrame::OnAbout)
     EVT_MENU(Wizard_Run,   MyFrame::OnRunWizard)
 
     EVT_WIZARD_CANCEL(wxID_ANY, MyFrame::OnWizardCancel)
     EVT_WIZARD_FINISHED(wxID_ANY, MyFrame::OnWizardFinished)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
-BEGIN_EVENT_TABLE(wxRadioboxPage, wxWizardPageSimple)
+wxBEGIN_EVENT_TABLE(wxRadioboxPage, wxWizardPageSimple)
     EVT_WIZARD_PAGE_CHANGING(wxID_ANY, wxRadioboxPage::OnWizardPageChanging)
     EVT_WIZARD_CANCEL(wxID_ANY, wxRadioboxPage::OnWizardCancel)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
-IMPLEMENT_APP(MyApp)
+wxIMPLEMENT_APP(MyApp);
 
 // ----------------------------------------------------------------------------
 // the application class

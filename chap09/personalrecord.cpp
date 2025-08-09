@@ -22,17 +22,17 @@
  * PersonalRecordDialog type definition
  */
 
-IMPLEMENT_CLASS( PersonalRecordDialog, wxDialog )
+wxIMPLEMENT_CLASS( PersonalRecordDialog, wxDialog )
 
 /*!
  * PersonalRecordDialog event table definition
  */
 
-BEGIN_EVENT_TABLE( PersonalRecordDialog, wxDialog )
+wxBEGIN_EVENT_TABLE( PersonalRecordDialog, wxDialog )
     EVT_UPDATE_UI( ID_VOTE, PersonalRecordDialog::OnVoteUpdate )
     EVT_BUTTON( ID_RESET, PersonalRecordDialog::OnResetClick )
     EVT_BUTTON( wxID_HELP, PersonalRecordDialog::OnHelpClick )
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 /*!
  * PersonalRecordDialog constructors

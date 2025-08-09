@@ -55,7 +55,7 @@
 
 #include "valconfig.h"
 
-IMPLEMENT_CLASS(wxConfigValidator, wxValidator)
+wxIMPLEMENT_CLASS(wxConfigValidator, wxValidator)
 
 wxConfigValidator::wxConfigValidator(const wxString& path, int valType, wxConfigBase* config)
 {

@@ -29,10 +29,10 @@ private:
 };
 
 // Implements MyApp& GetApp()
-DECLARE_APP(MyApp)
+wxDECLARE_APP(MyApp);
 
 // Give wxWidgets the means to create a MyApp object
-IMPLEMENT_APP(MyApp)
+wxIMPLEMENT_APP(MyApp);
 
 // Initialize the application
 bool MyApp::OnInit()
@@ -48,10 +48,10 @@ bool MyApp::OnInit()
 }
 
 // Event table for MyFrame
-BEGIN_EVENT_TABLE(MyFrame, wxFrame)
+wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(wxID_ABOUT, MyFrame::OnAbout)
     EVT_MENU(wxID_EXIT,  MyFrame::OnQuit)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 void MyFrame::OnAbout(wxCommandEvent& event)
 {

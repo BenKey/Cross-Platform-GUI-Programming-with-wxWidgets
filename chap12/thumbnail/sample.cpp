@@ -57,13 +57,13 @@ enum
     Sample_Browse
 };
 
-BEGIN_EVENT_TABLE(MyFrame, wxFrame)
+wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(Sample_Quit,  MyFrame::OnQuit)
     EVT_MENU(Sample_About, MyFrame::OnAbout)
     EVT_MENU(Sample_Browse, MyFrame::OnBrowse)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
-IMPLEMENT_APP(MyApp)
+wxIMPLEMENT_APP(MyApp);
 
 bool MyApp::OnInit()
 {

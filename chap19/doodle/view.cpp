@@ -25,9 +25,9 @@
 
 IMPLEMENT_DYNAMIC_CLASS(DoodleView, wxView)
 
-BEGIN_EVENT_TABLE(DoodleView, wxView)
+wxBEGIN_EVENT_TABLE(DoodleView, wxView)
     EVT_MENU(DOODLE_CUT, DoodleView::OnCut)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 // What to do when a view is created.
 bool DoodleView::OnCreate(wxDocument *doc, long WXUNUSED(flags))
@@ -102,9 +102,9 @@ void DoodleView::OnCut(wxCommandEvent& WXUNUSED(event))
  * Doodle canvas implementation
  */
 
-BEGIN_EVENT_TABLE(DoodleCanvas, wxScrolledWindow)
+wxBEGIN_EVENT_TABLE(DoodleCanvas, wxScrolledWindow)
     EVT_MOUSE_EVENTS(DoodleCanvas::OnMouseEvent)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 // Define a constructor
 DoodleCanvas::DoodleCanvas(wxWindow *parent, const wxPoint& pos,

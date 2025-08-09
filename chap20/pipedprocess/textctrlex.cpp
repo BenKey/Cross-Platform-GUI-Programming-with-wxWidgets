@@ -33,8 +33,8 @@
  * wxTextCtrlEx
  */
 
-IMPLEMENT_CLASS(wxTextCtrlEx, wxStyledTextCtrl)
-BEGIN_EVENT_TABLE(wxTextCtrlEx, wxStyledTextCtrl)
+wxIMPLEMENT_CLASS(wxTextCtrlEx, wxStyledTextCtrl)
+wxBEGIN_EVENT_TABLE(wxTextCtrlEx, wxStyledTextCtrl)
     EVT_MENU(wxID_CUT, wxTextCtrlEx::OnCut)
     EVT_MENU(wxID_PASTE, wxTextCtrlEx::OnPaste)
     EVT_MENU(wxID_COPY, wxTextCtrlEx::OnCopy)
@@ -47,7 +47,7 @@ BEGIN_EVENT_TABLE(wxTextCtrlEx, wxStyledTextCtrl)
     EVT_UPDATE_UI(wxID_UNDO, wxTextCtrlEx::OnUpdateUndo)
     EVT_UPDATE_UI(wxID_REDO, wxTextCtrlEx::OnUpdateRedo)
 
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 wxList wxTextCtrlEx::sm_editorCtrls;
 

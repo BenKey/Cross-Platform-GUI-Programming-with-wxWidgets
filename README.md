@@ -61,8 +61,8 @@ public:
     virtual bool OnInit();
 };
 
-DECLARE_APP(MyApp)
-IMPLEMENT_APP(MyApp)
+wxDECLARE_APP(MyApp);
+wxIMPLEMENT_APP(MyApp);
 ```
 
 addtionally, `wxArtProvider::PushProvider()` is corrected to `wxArtProvider::Push()`.

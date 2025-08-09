@@ -122,7 +122,7 @@ public:
     virtual bool OnInit();
 };
 
-IMPLEMENT_APP(DnDApp);
+wxIMPLEMENT_APP(DnDApp);
 
 #if wxUSE_DRAG_AND_DROP || wxUSE_CLIPBOARD
 
@@ -818,7 +818,7 @@ enum
     Button_Colour = 1001
 };
 
-BEGIN_EVENT_TABLE(DnDFrame, wxFrame)
+wxBEGIN_EVENT_TABLE(DnDFrame, wxFrame)
     EVT_MENU(Menu_Quit,       DnDFrame::OnQuit)
     EVT_MENU(Menu_About,      DnDFrame::OnAbout)
     EVT_MENU(Menu_Drag,       DnDFrame::OnDrag)
@@ -847,11 +847,11 @@ BEGIN_EVENT_TABLE(DnDFrame, wxFrame)
     EVT_RIGHT_DOWN(           DnDFrame::OnRightDown)
     EVT_PAINT(                DnDFrame::OnPaint)
     EVT_SIZE(                 DnDFrame::OnSize)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 #if wxUSE_DRAG_AND_DROP
 
-BEGIN_EVENT_TABLE(DnDShapeFrame, wxFrame)
+wxBEGIN_EVENT_TABLE(DnDShapeFrame, wxFrame)
     EVT_MENU(Menu_Shape_New,    DnDShapeFrame::OnNewShape)
     EVT_MENU(Menu_Shape_Edit,   DnDShapeFrame::OnEditShape)
     EVT_MENU(Menu_Shape_Clear,  DnDShapeFrame::OnClearShape)
@@ -865,22 +865,22 @@ BEGIN_EVENT_TABLE(DnDShapeFrame, wxFrame)
     EVT_LEFT_DOWN(DnDShapeFrame::OnDrag)
 
     EVT_PAINT(DnDShapeFrame::OnPaint)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
-BEGIN_EVENT_TABLE(DnDShapeDialog, wxDialog)
+wxBEGIN_EVENT_TABLE(DnDShapeDialog, wxDialog)
     EVT_BUTTON(Button_Colour, DnDShapeDialog::OnColour)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 #endif // wxUSE_DRAG_AND_DROP
 
-BEGIN_EVENT_TABLE(DnDCanvasBitmap, wxScrolledWindow)
+wxBEGIN_EVENT_TABLE(DnDCanvasBitmap, wxScrolledWindow)
     EVT_PAINT(DnDCanvasBitmap::OnPaint)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 #if wxUSE_METAFILES
-BEGIN_EVENT_TABLE(DnDCanvasMetafile, wxScrolledWindow)
+wxBEGIN_EVENT_TABLE(DnDCanvasMetafile, wxScrolledWindow)
     EVT_PAINT(DnDCanvasMetafile::OnPaint)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 #endif // wxUSE_METAFILES
 
 #endif // wxUSE_DRAG_AND_DROP

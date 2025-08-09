@@ -75,7 +75,7 @@ bool MyApp::OnInit()
 }
 
 // Implements MyApp& GetApp()
-DECLARE_APP(MyApp)
+wxDECLARE_APP(MyApp);
 
 // Give wxWidgets the means to create a MyApp object
-IMPLEMENT_APP(MyApp)
+wxIMPLEMENT_APP(MyApp);

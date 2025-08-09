@@ -70,7 +70,7 @@ public:
 };
 
 // Create a new application object
-IMPLEMENT_APP(MyApp)
+wxIMPLEMENT_APP(MyApp);
 
 // Define a new frame type
 class MyFrame: public wxFrame
@@ -332,7 +332,7 @@ private:
 // implementation
 // ----------------------------------------------------------------------------
 
-BEGIN_EVENT_TABLE(MyFrame, wxFrame)
+wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(THREAD_QUIT, MyFrame::OnQuit)
     EVT_MENU(THREAD_CLEAR, MyFrame::OnClear)
     EVT_MENU(THREAD_START_THREAD, MyFrame::OnStartThread)
@@ -352,7 +352,7 @@ BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(WORKER_EVENT, MyFrame::OnWorkerEvent)
 
     EVT_IDLE(MyFrame::OnIdle)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 MyApp::MyApp()
      : m_semAllDone()

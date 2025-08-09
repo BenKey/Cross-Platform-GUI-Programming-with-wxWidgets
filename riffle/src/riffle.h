@@ -105,7 +105,7 @@ public:
  */
 
 ////@begin declare app
-DECLARE_APP(RiffleApp)
+wxDECLARE_APP(RiffleApp);
 ////@end declare app
 
 #endif

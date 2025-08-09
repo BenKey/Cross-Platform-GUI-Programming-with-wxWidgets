@@ -22,10 +22,10 @@
  * A control for selecting font styles and colours
  */
 
-BEGIN_EVENT_TABLE(wxFontSelectorCtrl, wxControl)
+wxBEGIN_EVENT_TABLE(wxFontSelectorCtrl, wxControl)
     EVT_PAINT(wxFontSelectorCtrl::OnPaint)
     EVT_MOUSE_EVENTS(wxFontSelectorCtrl::OnMouseEvent)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 DEFINE_EVENT_TYPE(wxEVT_COMMAND_FONT_SELECTION_CHANGED)
 IMPLEMENT_DYNAMIC_CLASS(wxFontSelectorCtrlEvent, wxNotifyEvent)
@@ -100,8 +100,8 @@ void wxFontSelectorCtrl::OnMouseEvent(wxMouseEvent& event)
 
 IMPLEMENT_DYNAMIC_CLASS(wxFontSelectorValidator, wxValidator)
 
-BEGIN_EVENT_TABLE(wxFontSelectorValidator, wxValidator)
-END_EVENT_TABLE()
+wxBEGIN_EVENT_TABLE(wxFontSelectorValidator, wxValidator)
+wxEND_EVENT_TABLE()
 
 wxFontSelectorValidator::wxFontSelectorValidator(wxFontData *val)
 {

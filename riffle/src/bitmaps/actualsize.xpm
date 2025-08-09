@@ -1,5 +1,5 @@
 /* XPM */
-static char *actualsize_xpm[] = {
+static const char *actualsize_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 53 1",
 "6 c #1E1E1E",

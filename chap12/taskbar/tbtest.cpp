@@ -45,7 +45,7 @@ static MyDialog *gs_dialog = nullptr;
 // MyApp
 // ----------------------------------------------------------------------------
 
-wxIMPLEMENT_APP(MyApp);
+wxwxIMPLEMENT_APP(MyApp);
 
 bool MyApp::OnInit()
 {
@@ -75,12 +75,12 @@ bool MyApp::OnInit()
 // MyDialog implementation
 // ----------------------------------------------------------------------------
 
-wxBEGIN_EVENT_TABLE(MyDialog, wxDialog)
+wxwxBEGIN_EVENT_TABLE(MyDialog, wxDialog)
     EVT_BUTTON(wxID_ABOUT, MyDialog::OnAbout)
     EVT_BUTTON(wxID_OK, MyDialog::OnOK)
     EVT_BUTTON(wxID_EXIT, MyDialog::OnExit)
     EVT_CLOSE(MyDialog::OnCloseWindow)
-wxEND_EVENT_TABLE()
+wxwxEND_EVENT_TABLE()
 
 
 MyDialog::MyDialog(const wxString& title)
@@ -194,7 +194,7 @@ enum
 };
 
 
-wxBEGIN_EVENT_TABLE(MyTaskBarIcon, wxTaskBarIcon)
+wxwxBEGIN_EVENT_TABLE(MyTaskBarIcon, wxTaskBarIcon)
     EVT_MENU(PU_RESTORE, MyTaskBarIcon::OnMenuRestore)
     EVT_MENU(PU_EXIT,    MyTaskBarIcon::OnMenuExit)
     EVT_MENU(PU_NEW_ICON,MyTaskBarIcon::OnMenuSetNewIcon)
@@ -203,7 +203,7 @@ wxBEGIN_EVENT_TABLE(MyTaskBarIcon, wxTaskBarIcon)
     EVT_TASKBAR_LEFT_DCLICK  (MyTaskBarIcon::OnLeftButtonDClick)
     EVT_MENU(PU_SUB1, MyTaskBarIcon::OnMenuSub)
     EVT_MENU(PU_SUB2, MyTaskBarIcon::OnMenuSub)
-wxEND_EVENT_TABLE()
+wxwxEND_EVENT_TABLE()
 
 void MyTaskBarIcon::OnMenuRestore(wxCommandEvent& )
 {

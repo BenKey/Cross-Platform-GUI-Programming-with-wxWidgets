@@ -51,11 +51,11 @@ DEFINE_EVENT_TYPE(wxEVT_COMMAND_THUMBNAIL_RIGHT_CLICK)
 DEFINE_EVENT_TYPE(wxEVT_COMMAND_THUMBNAIL_LEFT_DCLICK)
 DEFINE_EVENT_TYPE(wxEVT_COMMAND_THUMBNAIL_RETURN)
 
-IMPLEMENT_CLASS( wxThumbnailCtrl, wxScrolledWindow )
-IMPLEMENT_CLASS( wxThumbnailItem, wxObject )
-IMPLEMENT_CLASS( wxThumbnailEvent, wxNotifyEvent )
+wxIMPLEMENT_CLASS( wxThumbnailCtrl, wxScrolledWindow )
+wxIMPLEMENT_CLASS( wxThumbnailItem, wxObject )
+wxIMPLEMENT_CLASS( wxThumbnailEvent, wxNotifyEvent )
 
-BEGIN_EVENT_TABLE( wxThumbnailCtrl, wxScrolledWindow )
+wxBEGIN_EVENT_TABLE( wxThumbnailCtrl, wxScrolledWindow )
     EVT_PAINT(wxThumbnailCtrl::OnPaint)
     EVT_ERASE_BACKGROUND(wxThumbnailCtrl::OnEraseBackground)
     EVT_LEFT_DOWN(wxThumbnailCtrl::OnLeftClick)
@@ -69,7 +69,7 @@ BEGIN_EVENT_TABLE( wxThumbnailCtrl, wxScrolledWindow )
 
     EVT_MENU(wxID_SELECTALL, wxThumbnailCtrl::OnSelectAll)
     EVT_UPDATE_UI(wxID_SELECTALL, wxThumbnailCtrl::OnUpdateSelectAll)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 wxThumbnailCtrl* wxThumbnailCtrl::sm_currentThumbnailCtrl = NULL;
 
@@ -1607,7 +1607,7 @@ wxSize wxThumbnailCtrl::DoGetBestSize() const
  * wxImageThumbnailItem
  */
 
-IMPLEMENT_CLASS(wxImageThumbnailItem, wxThumbnailItem)
+wxIMPLEMENT_CLASS(wxImageThumbnailItem, wxThumbnailItem)
 
 /// Draw the item
 bool wxImageThumbnailItem::Draw(wxDC& dc, wxThumbnailCtrl* WXUNUSED(ctrl), const wxRect& rect, int WXUNUSED(style))

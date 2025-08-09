@@ -34,7 +34,7 @@ private:
     wxDocManager* m_docManager;
 };
 
-DECLARE_APP(DoodleApp)
+wxDECLARE_APP(DoodleApp);
 
 // Define a new frame
 class DoodleCanvas;

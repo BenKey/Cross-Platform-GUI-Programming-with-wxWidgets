@@ -40,13 +40,13 @@ static int DetermineImageType(const wxString& filename);
  * wxThumbnailBrowserDialog type definition
  */
 
-IMPLEMENT_CLASS( wxThumbnailBrowserDialog, wxDialog )
+wxIMPLEMENT_CLASS( wxThumbnailBrowserDialog, wxDialog )
 
 /*!
  * wxThumbnailBrowserDialog event table definition
  */
 
-BEGIN_EVENT_TABLE( wxThumbnailBrowserDialog, wxDialog )
+wxBEGIN_EVENT_TABLE( wxThumbnailBrowserDialog, wxDialog )
     // The correct control is actually the tree control, not the dir control.
     EVT_TREE_SEL_CHANGED( wxID_TREECTRL, wxThumbnailBrowserDialog::OnImageBrowserDirctrlSelChanged )
 
@@ -58,7 +58,7 @@ BEGIN_EVENT_TABLE( wxThumbnailBrowserDialog, wxDialog )
 
 ////@end wxThumbnailBrowserDialog event table entries
 
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 /*!
  * wxThumbnailBrowserDialog constructors

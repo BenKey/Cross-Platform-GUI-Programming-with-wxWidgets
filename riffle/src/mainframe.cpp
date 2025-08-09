@@ -49,13 +49,13 @@
  * RiffleFrame type definition
  */
 
-IMPLEMENT_CLASS( RiffleFrame, wxFrame )
+wxIMPLEMENT_CLASS( RiffleFrame, wxFrame )
 
 /*!
  * RiffleFrame event table definition
  */
 
-BEGIN_EVENT_TABLE( RiffleFrame, wxFrame )
+wxBEGIN_EVENT_TABLE( RiffleFrame, wxFrame )
     EVT_TREE_SEL_CHANGED( wxID_TREECTRL, RiffleFrame::OnDirctrlSelChanged )
 
 ////@begin RiffleFrame event table entries
@@ -115,7 +115,7 @@ BEGIN_EVENT_TABLE( RiffleFrame, wxFrame )
 
 ////@end RiffleFrame event table entries
 
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 /*!
  * RiffleFrame constructors

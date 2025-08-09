@@ -54,7 +54,7 @@ protected:
     wxString          m_input; // to send to process
 };
 
-IMPLEMENT_CLASS(DebuggerProcess, PipedProcess)
+wxIMPLEMENT_CLASS(DebuggerProcess, PipedProcess)
 
 /*!
  * A specialisation of wxTextCtrlEx so we can process return and
@@ -96,12 +96,12 @@ DECLARE_EVENT_TABLE()
  * A debugger window class
  */
 
-IMPLEMENT_CLASS(DebuggerWindow, wxPanel)
+wxIMPLEMENT_CLASS(DebuggerWindow, wxPanel)
 
-BEGIN_EVENT_TABLE(DebuggerWindow, wxPanel)
+wxBEGIN_EVENT_TABLE(DebuggerWindow, wxPanel)
 EVT_MENU_RANGE(DebuggerFIRST, DebuggerLAST, DebuggerWindow::OnToolButton)
 EVT_UPDATE_UI_RANGE(DebuggerFIRST, DebuggerLAST, DebuggerWindow::OnUpdateToolButton)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 DebuggerWindow::DebuggerWindow(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style):
   wxPanel(parent, id, pos, size, style)
@@ -489,11 +489,11 @@ void DebuggerProcess::SendInput(const wxString& text)
  * send the line to gdb
  */
 
-IMPLEMENT_CLASS(DebuggerConsoleCtrl, wxTextCtrlEx)
+wxIMPLEMENT_CLASS(DebuggerConsoleCtrl, wxTextCtrlEx)
 
-BEGIN_EVENT_TABLE(DebuggerConsoleCtrl, wxTextCtrlEx)
+wxBEGIN_EVENT_TABLE(DebuggerConsoleCtrl, wxTextCtrlEx)
     EVT_STC_CHARADDED (-1, DebuggerConsoleCtrl::OnCharAdded)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 DebuggerConsoleCtrl::DebuggerConsoleCtrl(
   wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, int style):

@@ -28,10 +28,10 @@
 #include "riffle.h"
 #include "generalsettingsdlg.h"
 
-IMPLEMENT_CLASS(SettingsDialog, wxPropertySheetDialog)
+wxIMPLEMENT_CLASS(SettingsDialog, wxPropertySheetDialog)
 
-BEGIN_EVENT_TABLE(SettingsDialog, wxPropertySheetDialog)
-END_EVENT_TABLE()
+wxBEGIN_EVENT_TABLE(SettingsDialog, wxPropertySheetDialog)
+wxEND_EVENT_TABLE()
 
 SettingsDialog::SettingsDialog(wxWindow* win)
 {

@@ -40,12 +40,12 @@ static int DetermineImageType(const wxString& filename);
  * RiffleImageViewer
  */
 
-IMPLEMENT_CLASS( RiffleImageViewer, wxScrolledWindow )
+wxIMPLEMENT_CLASS( RiffleImageViewer, wxScrolledWindow )
 
-BEGIN_EVENT_TABLE( RiffleImageViewer, wxScrolledWindow )
+wxBEGIN_EVENT_TABLE( RiffleImageViewer, wxScrolledWindow )
     EVT_SIZE( RiffleImageViewer::OnSize )
     EVT_PAINT( RiffleImageViewer::OnPaint )
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 RiffleImageViewer::RiffleImageViewer( wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style )
 {
@@ -329,12 +329,12 @@ bool RiffleImageViewer::CopyToClipboard()
  * RiffleBrowserViewer
  */
 
-IMPLEMENT_CLASS( RiffleBrowserViewer, wxWindow )
+wxIMPLEMENT_CLASS( RiffleBrowserViewer, wxWindow )
 
-BEGIN_EVENT_TABLE( RiffleBrowserViewer, wxWindow )
+wxBEGIN_EVENT_TABLE( RiffleBrowserViewer, wxWindow )
     EVT_SIZE( RiffleBrowserViewer::OnSize )
     EVT_THUMBNAIL_LEFT_CLICK(wxID_ANY, RiffleBrowserViewer::OnLeftClick)
-END_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
 RiffleBrowserViewer::RiffleBrowserViewer( wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style )
 {
