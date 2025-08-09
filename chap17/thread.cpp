@@ -670,8 +670,7 @@ void MyFrame::OnExecThread(wxCommandEvent& WXUNUSED(event))
     MyExecThread thread(wxT("/bin/echo \"child thread\""));
     thread.Run();
 
-    wxLogMessage(wxT("The exit code from a child thread is %ld"),
-                 (long)thread.Wait());
+    wxLogMessage(wxT("The exit code from a child thread is %p"), thread.Wait());
 }
 
 void MyFrame::OnShowCPUs(wxCommandEvent& WXUNUSED(event))

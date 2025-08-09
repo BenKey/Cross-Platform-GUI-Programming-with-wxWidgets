@@ -154,7 +154,7 @@ MyFrame::MyFrame(const wxString& title )
     m_helloString   = new wxStaticText( panel , wxID_ANY , wxEmptyString , wxPoint( 10 , 20 ) , wxSize( 100 , 20 ) ) ;
     m_todayString   = new wxStaticText( panel , wxID_ANY , wxEmptyString , wxPoint( 10 , 50 ) , wxSize( 100 , 20 ) ) ;
     m_thousandString = new wxStaticText( panel , wxID_ANY , wxEmptyString , wxPoint( 10 , 80 ) , wxSize( 100 , 20 ) ) ;
-    m_flag = new wxStaticBitmap( panel , wxID_ANY , wxBitmap( _(AppPath+"/flag.png") , wxBITMAP_TYPE_PNG ) , wxPoint( 10 , 110 ) ) ;
+    m_flag = new wxStaticBitmap(panel , wxID_ANY , wxBitmap(AppPath + "/flag.png", wxBITMAP_TYPE_PNG ) , wxPoint( 10 , 110 ) ) ;
 
     CreateStatusBar(2);
 
@@ -182,7 +182,7 @@ void MyFrame::SetupStrings()
     default:
         break;
     }
-    m_flag->SetBitmap(wxBitmap( _(AppPath + lanuageDir +"flag.png") , wxBITMAP_TYPE_PNG )) ;
+    m_flag->SetBitmap(wxBitmap( AppPath + lanuageDir + "flag.png" , wxBITMAP_TYPE_PNG )) ;
 
     // create a menu bar
     wxMenu *menuFile = new wxMenu;
