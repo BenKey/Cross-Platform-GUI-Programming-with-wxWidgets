@@ -20,7 +20,7 @@
 class DoodleView;
 class DoodleCanvas: public wxScrolledWindow
 {
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 public:
     DoodleCanvas(wxWindow *parent, const wxPoint& pos, const wxSize& size, const long style);
 
@@ -46,7 +46,7 @@ class DoodleFrame;
 class DoodleView: public wxView
 {
     DECLARE_DYNAMIC_CLASS(DoodleView)
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 public:
     DoodleView() { m_frame = NULL; }
     ~DoodleView() {};

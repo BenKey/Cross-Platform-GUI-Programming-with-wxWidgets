@@ -68,7 +68,7 @@ class wxThumbnailCtrl;
 class wxThumbnailBrowserDialog: public wxDialog
 {    
     DECLARE_CLASS( wxThumbnailBrowserDialog )
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 
 public:
     /// Constructors

@@ -76,7 +76,7 @@ private:
     wxMenuBar      *m_menuBar;
 
     // any class wishing to process wxWidgets events must use this macro
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
 // --------------------------------------------------------------------------

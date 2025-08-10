@@ -31,7 +31,7 @@ protected:
 
     wxPanel*    m_generalSettingsPage;
 
-DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
 

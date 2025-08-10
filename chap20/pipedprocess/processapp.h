@@ -24,8 +24,8 @@
 
 class ProcessApp: public wxApp
 {
-DECLARE_CLASS(ProcessApp)
-DECLARE_EVENT_TABLE()
+    DECLARE_CLASS(ProcessApp)
+    wxDECLARE_EVENT_TABLE();
 
 public:
     ProcessApp() {}

@@ -25,7 +25,7 @@
 class wxFontSelectorCtrl: public wxControl
 {
     DECLARE_DYNAMIC_CLASS(wxFontSelectorCtrl)
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 
 public:
 
@@ -137,7 +137,7 @@ public:
 
     wxFontData* GetFontData() { return m_fontDataValue; }
 
-DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 
 protected:
     wxFontData*     m_fontDataValue;

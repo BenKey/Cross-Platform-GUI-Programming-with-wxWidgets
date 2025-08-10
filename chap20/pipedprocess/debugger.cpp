@@ -88,7 +88,7 @@ protected:
 
     bool    m_writing;
 
-DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
 

@@ -117,7 +117,7 @@ DECLARE_CLASS(DebuggerWindow)
     void OnUpdateToolButton(wxUpdateUIEvent& event);
 
 
-DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 
 protected:
     wxToolBar*          m_toolBar;

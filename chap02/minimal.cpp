@@ -25,7 +25,7 @@ public:
 
 private:
     // This class handles events
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
 // Implements MyApp& GetApp()

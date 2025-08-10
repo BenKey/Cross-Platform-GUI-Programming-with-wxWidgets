@@ -41,7 +41,7 @@ class DoodleCanvas;
 class DoodleFrame: public wxDocParentFrame
 {
     DECLARE_CLASS(DoodleFrame)
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 public:
     DoodleFrame(wxDocManager *manager, wxFrame *frame, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size,
         long type);

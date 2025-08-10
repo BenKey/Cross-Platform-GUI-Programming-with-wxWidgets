@@ -128,7 +128,7 @@ private:
     // protects m_cancelled
     wxCriticalSection m_critsectWork;
 
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
 // ID for the menu commands

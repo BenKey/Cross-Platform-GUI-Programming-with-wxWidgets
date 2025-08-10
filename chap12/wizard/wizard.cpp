@@ -52,7 +52,7 @@ public:
     void OnWizardFinished(wxWizardEvent& event);
 
 private:
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
 // ----------------------------------------------------------------------------
@@ -179,7 +179,7 @@ public:
 private:
     wxRadioBox *m_radio;
 
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
 // This shows how to dynamically (i.e. during run-time) arrange the page order.

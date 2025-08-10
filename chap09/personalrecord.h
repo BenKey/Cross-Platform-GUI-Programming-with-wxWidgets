@@ -41,7 +41,7 @@ enum {
 class PersonalRecordDialog: public wxDialog
 {    
     DECLARE_CLASS( PersonalRecordDialog )
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 
 public:
 

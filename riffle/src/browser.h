@@ -33,7 +33,7 @@
 class RiffleImageViewer: public wxScrolledWindow
 {    
     DECLARE_CLASS( RiffleImageViewer )
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 
 public:
     /// Constructors
@@ -105,7 +105,7 @@ protected:
 class RiffleBrowserViewer: public wxWindow
 {    
     DECLARE_CLASS( RiffleBrowserViewer )
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 
 public:
     /// Constructors

@@ -85,7 +85,7 @@ class RiffleBrowserViewer;
 class RiffleFrame: public wxFrame
 {    
     DECLARE_CLASS( RiffleFrame )
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 
 public:
     /// Constructors

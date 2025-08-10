@@ -106,7 +106,7 @@ protected:
     bool    m_loading;
 
 
-DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
 #endif

@@ -52,7 +52,7 @@
 class RiffleApp: public wxApp
 {    
     DECLARE_CLASS( RiffleApp )
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 
 public:
     /// Constructor

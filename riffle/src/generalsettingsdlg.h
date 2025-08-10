@@ -67,7 +67,7 @@
 class GeneralSettingsPage: public wxPanel
 {    
     DECLARE_DYNAMIC_CLASS( GeneralSettingsPage )
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 
 public:
     /// Constructors

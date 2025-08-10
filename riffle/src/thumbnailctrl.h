@@ -155,7 +155,7 @@ WX_DECLARE_OBJARRAY(wxThumbnailItem, wxThumbnailItemArray);
 class wxThumbnailCtrl: public wxScrolledWindow
 {    
     DECLARE_CLASS( wxThumbnailCtrl )
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 
 public:
 // Constructors

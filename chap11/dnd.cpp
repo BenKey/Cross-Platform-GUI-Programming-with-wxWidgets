@@ -160,7 +160,7 @@ public:
 private:
     wxBitmap m_bitmap;
 
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
 #if wxUSE_METAFILES
@@ -196,7 +196,7 @@ public:
 private:
     wxMetafile m_metafile;
 
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
 #endif // wxUSE_METAFILES
@@ -244,7 +244,7 @@ public:
     void OnUpdateUIPasteText(wxUpdateUIEvent& event);
     void OnUpdateUIPasteBitmap(wxUpdateUIEvent& event);
 
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 
 private:
     // GUI controls
@@ -690,7 +690,7 @@ private:
                *m_textW,
                *m_textH;
 
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
 // ----------------------------------------------------------------------------
@@ -729,7 +729,7 @@ private:
 
     static DnDShapeFrame *ms_lastDropTarget;
 
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
 // ----------------------------------------------------------------------------
