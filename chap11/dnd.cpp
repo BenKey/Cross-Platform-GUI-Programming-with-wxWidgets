@@ -335,7 +335,7 @@ public:
 
     virtual void Draw(wxDC& dc)
     {
-        dc.SetPen(wxPen(m_col, 1, wxSOLID));
+        dc.SetPen(wxPen(m_col, 1, wxPENSTYLE_SOLID));
     }
 
 protected:
@@ -388,7 +388,7 @@ public:
         dc.DrawLine(p3, p1);
 
         //works in multicolor modes; on GTK (at least) will fail in 16-bit color
-        dc.SetBrush(wxBrush(m_col, wxSOLID));
+        dc.SetBrush(wxBrush(m_col, wxBRUSHSTYLE_SOLID));
         dc.FloodFill(GetCentre(), m_col, wxFLOOD_BORDER);
     }
 };
@@ -424,7 +424,7 @@ public:
         dc.DrawLine(p3, p4);
         dc.DrawLine(p4, p1);
 
-        dc.SetBrush(wxBrush(m_col, wxSOLID));
+        dc.SetBrush(wxBrush(m_col, wxBRUSHSTYLE_SOLID));
         dc.FloodFill(GetCentre(), m_col, wxFLOOD_BORDER);
     }
 };
@@ -452,7 +452,7 @@ public:
 
         dc.DrawEllipse(m_pos, m_size);
 
-        dc.SetBrush(wxBrush(m_col, wxSOLID));
+        dc.SetBrush(wxBrush(m_col, wxBRUSHSTYLE_SOLID));
         dc.FloodFill(GetCentre(), m_col, wxFLOOD_BORDER);
     }
 };
@@ -1052,7 +1052,7 @@ void DnDFrame::OnPaint(wxPaintEvent& WXUNUSED(event))
 
     wxPaintDC dc(this);
     // dc.Clear(); -- this kills wxGTK
-    dc.SetFont( wxFont( 24, wxDECORATIVE, wxNORMAL, wxNORMAL, false, _T("charter") ) );
+    dc.SetFont(wxFont(24, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, _T("charter")));
     dc.DrawText( _T("Drag text from here!"), 100, h-50 );
 }
 
@@ -1940,7 +1940,7 @@ void DnDShapeDataObject::CreateBitmap() const
     wxBitmap bitmap(x, y);
     wxMemoryDC dc;
     dc.SelectObject(bitmap);
-    dc.SetBrush(wxBrush(wxT("white"), wxSOLID));
+    dc.SetBrush(wxBrush(wxT("white"), wxBRUSHSTYLE_SOLID));
     dc.Clear();
     m_shape->Draw(dc);
     dc.SelectObject(wxNullBitmap);
