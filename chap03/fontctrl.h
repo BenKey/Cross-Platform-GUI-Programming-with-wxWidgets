@@ -97,9 +97,7 @@ typedef void (wxEvtHandler::*wxFontSelectorCtrlEventFunction)(wxFontSelectorCtrl
  * Font selector control events and macros for handling them
  */
 
-BEGIN_DECLARE_EVENT_TYPES()
-    DECLARE_EVENT_TYPE(wxEVT_COMMAND_FONT_SELECTION_CHANGED, 801)
-END_DECLARE_EVENT_TYPES()
+extern const wxEventType wxEVT_COMMAND_FONT_SELECTION_CHANGED;
 
 #define EVT_FONT_SELECTION_CHANGED(id, fn) DECLARE_EVENT_TABLE_ENTRY( wxEVT_COMMAND_FONT_SELECTION_CHANGED, id, -1, (wxObjectEventFunction) (wxEventFunction) (wxFontSelectorCtrlEventFunction) & fn, (wxObject *) NULL ),
 

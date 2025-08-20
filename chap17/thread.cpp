@@ -321,7 +321,7 @@ public:
 
     virtual ExitCode Entry()
     {
-        return (ExitCode)EXEC(m_command);
+        return reinterpret_cast<ExitCode>(EXEC(m_command));
     }
 
 private:

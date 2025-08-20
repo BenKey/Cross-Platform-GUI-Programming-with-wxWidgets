@@ -33,6 +33,7 @@
 #include "wx/datetime.h"
 #include "wx/image.h"
 #include "wx/filename.h"
+#include "wx/stdpaths.h"
 
 // ----------------------------------------------------------------------------
 // resources
@@ -115,7 +116,8 @@ bool MyApp::OnInit()
     m_locale = NULL ;
     SelectLanguage( wxLANGUAGE_DEFAULT ) ;
 
-    m_appDir = argv[0];
+    wxString programPath = wxStandardPaths::Get().GetExecutablePath();
+    m_appDir = ((wxFileName) programPath).GetPath();
 
     MyFrame *frame = new MyFrame(_("i18n wxWidgets App"));
 
@@ -147,8 +149,8 @@ MyFrame::MyFrame(const wxString& title )
     // set the frame icon
     SetIcon(sample_xpm);
     
-    
-    AppPath = ((wxFileName) wxGetApp().argv[0]).GetPath();
+    wxString programPath = wxStandardPaths::Get().GetExecutablePath();
+    AppPath = ((wxFileName) programPath).GetPath();
 
     wxPanel *panel  = new wxPanel( this ) ;
     m_helloString   = new wxStaticText( panel , wxID_ANY , wxEmptyString , wxPoint( 10 , 20 ) , wxSize( 100 , 20 ) ) ;

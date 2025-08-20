@@ -27,7 +27,7 @@ wxBEGIN_EVENT_TABLE(wxFontSelectorCtrl, wxControl)
     EVT_MOUSE_EVENTS(wxFontSelectorCtrl::OnMouseEvent)
 wxEND_EVENT_TABLE()
 
-DEFINE_EVENT_TYPE(wxEVT_COMMAND_FONT_SELECTION_CHANGED)
+const wxEventType wxEVT_COMMAND_FONT_SELECTION_CHANGED = wxNewEventType();
 IMPLEMENT_DYNAMIC_CLASS(wxFontSelectorCtrlEvent, wxNotifyEvent)
 
 IMPLEMENT_DYNAMIC_CLASS(wxFontSelectorCtrl, wxControl)
