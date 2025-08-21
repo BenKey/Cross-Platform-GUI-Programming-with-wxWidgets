@@ -9,6 +9,8 @@
 // Licence:     wxWindows license
 /////////////////////////////////////////////////////////////////////////////
 
+#include <cstdint>
+
 // For compilers that support precompilation, includes "wx/wx.h".
 #include "wx/wxprec.h"
 
@@ -321,7 +323,7 @@ public:
 
     virtual ExitCode Entry()
     {
-        return reinterpret_cast<ExitCode>(EXEC(m_command));
+        return reinterpret_cast<ExitCode>(static_cast<std::intptr_t>(EXEC(m_command)));
     }
 
 private:
